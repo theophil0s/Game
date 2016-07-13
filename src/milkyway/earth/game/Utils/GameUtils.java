@@ -1,4 +1,4 @@
-package Utils;
+package milkyway.earth.game.Utils;
 import milkyway.earth.game.main.Game;
 import milkyway.earth.game.main.GameObject;
 import org.newdawn.slick.geom.Point;

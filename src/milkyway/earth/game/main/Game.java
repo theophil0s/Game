@@ -2,6 +2,7 @@ package milkyway.earth.game.main;
 
 import java.awt.Dimension;
 
+import milkyway.earth.game.Utils.GameObjects;
 import milkyway.earth.game.input.GameInput;
 
 import org.newdawn.slick.AppGameContainer;
@@ -9,8 +10,6 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-
-import Utils.GameObjects;
 
 public class Game extends BasicGame{
 

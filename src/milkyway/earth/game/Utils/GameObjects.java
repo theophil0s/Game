@@ -1,4 +1,4 @@
-package Utils;
+package milkyway.earth.game.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
