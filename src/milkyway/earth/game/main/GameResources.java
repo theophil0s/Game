@@ -11,7 +11,7 @@ public class GameResources {
 		
 		try {
 		
-			player = new Image("res/img/t.jpg");
+			player = new Image("assets/img/t.jpg");
 		
 		} catch (SlickException e) {
 

@@ -14,7 +14,6 @@ import Utils.GameObjects;
 
 public class Game extends BasicGame{
 
-
 	private static final String NAME = "Game";
 	private static final int FRAMERATE_MAX = 60;								
 	private static final Boolean SHOW_FPS = true;
@@ -22,8 +21,8 @@ public class Game extends BasicGame{
 	private static final Boolean FULLSCREEN_WINDOW = false;
 	private static final Boolean VSYNC = false;
 	private static final Boolean ALWAYS_RENDER = false;
-	private static final int WIDTH = 1024;
-	private static final int HEIGHT = 768;
+	private static final int WIDTH = 1280;
+	private static final int HEIGHT = 720;
 	
 	private static Game game;
 	private static Dimension size;
