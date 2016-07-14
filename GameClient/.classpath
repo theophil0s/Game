@@ -7,9 +7,9 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Game/lib/slick2D"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/slick2D/lib/jinput.jar"/>
-	<classpathentry kind="lib" path="lib/slick2D/lib/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="lib/slick2D/lib/lwjgl.jar"/>
-	<classpathentry kind="lib" path="lib/slick2D/lib/slick.jar"/>
+	<classpathentry kind="lib" path="lib/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl.jar"/>
+	<classpathentry kind="lib" path="lib/slick.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
