@@ -5,7 +5,7 @@ import org.newdawn.slick.SlickException;
 
 import milkyway.earth.game.main.Game;
 
-public class GameInput extends Game{
+public class GameInput extends Game {
 
 	public GameInput(BasicGame g, int height) throws SlickException {
 		super("Name");
