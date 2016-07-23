@@ -60,7 +60,7 @@ public class Game extends BasicGame {
 
 		new GameResources();
 
-		setScale(1F);
+		setScale(1);
 
 		level = new GameLevel();
 		objects = new GameObjects();

@@ -12,7 +12,7 @@ public class GameObject {
 	private int id;
 	private Image image;
 	private Point position;
-	private float scale = 0.5F;
+	private float scale = 1F;
 	private Color filter = null;
 	private Shape hitbox;
 
@@ -25,9 +25,10 @@ public class GameObject {
 	}
 
 	public void render(GameContainer gc, Graphics g, float worldScale) {
-
-		if (image != null && position != null)
+				
+		if (image != null && position != null) {
 			image.draw(position.getX(), position.getY(), worldScale, filter);
+		}
 	}
 
 	public Image getImage() {
