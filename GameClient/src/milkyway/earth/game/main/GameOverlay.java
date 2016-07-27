@@ -24,5 +24,7 @@ public class GameOverlay {
 		g.drawString("fpsCounter:" + String.valueOf(fpsCounter), 10, 30);
 		g.drawString("updateCounter:" + String.valueOf(updateCounter), 10, 50);
 		g.drawString("delta:" + String.valueOf(delta), 10, 70);
+		g.drawString("offX: " + GameLevel.offX, 10, 90);
+		g.drawString("offX: " + GameLevel.offY, 10, 110);
 	}
 }

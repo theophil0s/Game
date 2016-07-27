@@ -37,7 +37,7 @@ public class GameServer {
 	private Set<PlayerConnection> playerConnections = new HashSet<>(4);
 
 	public GameServer(String name, String password, int port) {
-		this.name = name;
+		this.setName(name);
 		this.password = password;
 		this.port = port;
 	}
@@ -68,6 +68,14 @@ public class GameServer {
 
 	public boolean isRunning() {
 		return this.running;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	private class GameServerListener extends Listener {

@@ -14,6 +14,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="GameClient/lib/native/windows"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/GameCommon"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GameCommon"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

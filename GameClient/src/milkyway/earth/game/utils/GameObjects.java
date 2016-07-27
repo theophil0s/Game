@@ -31,11 +31,6 @@ public class GameObjects {
 	}
 
 	public void init(GameContainer gc) throws SlickException {
-		// Player player = new Player();
-		// player.setImage(GameResources.player.getScaledCopy(Game.getScale()));
-		// player.setPostition(GameUtils.getCenter(player));
-		//
-		// addObject(player);
 
 		for (GameObject go : objects) {
 			go.init(gc);
@@ -50,7 +45,7 @@ public class GameObjects {
 
 	public void render(GameContainer container, Graphics g) {
 		for (GameObject go : objects) {
-			go.render(container, g, Game.getScale());
+			go.render(container, g, (float) Game.getScale());
 		}
 	}
 }

@@ -118,7 +118,7 @@ public class GameClient {
 				player.setName(addPlayer.getName());
 				player.setPostition(addPlayer.getX(), addPlayer.getY());
 				// TODO replace
-				player.setImage(GameResources.player.getScaledCopy(Game.getScale()));
+				player.setImage(GameResources.character.getSubImage(0, 0).getScaledCopy((float) Game.getScale()));
 				gameObjects.addObject(player);
 
 				// TODO replace
