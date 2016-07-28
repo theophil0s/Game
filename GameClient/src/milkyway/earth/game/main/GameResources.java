@@ -6,11 +6,17 @@ import org.newdawn.slick.SpriteSheet;
 
 public class GameResources {
 
+	
+	private static GameResources res;
+	
 	public static Image player;
-	// public static TileSet tiles;
 	public static SpriteSheet sprite;
 	public static SpriteSheet character;
 
+	public GameResources getResourses() {
+		return res;
+	}
+	
 	public GameResources() {
 
 		try {

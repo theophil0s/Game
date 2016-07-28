@@ -31,7 +31,7 @@ public class StatePlay extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-		new GameResources();
+		new GameResources().getResourses();
 
 		input = new GameInput(gc, gc.getHeight());
 
@@ -59,10 +59,12 @@ public class StatePlay extends BasicGameState {
 		}
 	}
 
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 
 		input.update();
+		
 		level.update(gc, delta);
 		objects.update(gc, delta);
 		overlay.update(gc, delta);

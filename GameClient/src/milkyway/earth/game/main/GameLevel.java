@@ -10,8 +10,8 @@ public class GameLevel {
 	int sizeX = 200;
 	int sizeY = 200;
 
-	public static int offX = 0;
-	public static int offY = 0;
+	public static int offX;
+	public static int offY;
 
 	Block block[][];
 
@@ -61,5 +61,21 @@ public class GameLevel {
 				}
 			}
 		}
+	}
+
+	public static int getOffX() {
+		return offX;
+	}
+
+	public static void setOffX(int offX) {
+		GameLevel.offX = offX;
+	}
+
+	public static int getOffY() {
+		return offY;
+	}
+
+	public static void setOffY(int offY) {
+		GameLevel.offY = offY;
 	}
 }

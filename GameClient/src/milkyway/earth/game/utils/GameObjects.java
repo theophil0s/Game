@@ -31,7 +31,6 @@ public class GameObjects {
 	}
 
 	public void init(GameContainer gc) throws SlickException {
-
 		for (GameObject go : objects) {
 			go.init(gc);
 		}

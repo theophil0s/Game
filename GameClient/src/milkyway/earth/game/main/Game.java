@@ -26,14 +26,13 @@ public class Game extends StateBasedGame {
 	private static final int HEIGHT = 720;
 
 	private static Game game;
-	private static double scale;
+	private static float scale;
 	private static Dimension size;
 	private static Dimension resolution;
 	private static AppGameContainer container;
 
 	public Game(String title) throws SlickException {
 		super(title);
-		setScale(1);
 	}
 
 	public static void main(String[] args) throws SlickException {
@@ -47,12 +46,7 @@ public class Game extends StateBasedGame {
 		resolution = new Dimension(WIDTH, HEIGHT);
 		container = new AppGameContainer(game);
 
-		if (FULLSCREEN) {
-
-			size = new Dimension(container.getScreenWidth(), container.getScreenHeight());
-
-		} else if (FULLSCREEN_WINDOW) {
-
+		if (FULLSCREEN_WINDOW) {
 			size = new Dimension(container.getScreenWidth(), container.getScreenHeight());
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 
@@ -61,6 +55,8 @@ public class Game extends StateBasedGame {
 			size = resolution;
 		}
 
+		setScale(size.width / 1920F * 1.5F);
+		
 		container.setDisplayMode(size.width, size.height, false);
 		container.setShowFPS(SHOW_FPS);
 		container.setFullscreen(FULLSCREEN);
@@ -69,7 +65,6 @@ public class Game extends StateBasedGame {
 		container.setAlwaysRender(ALWAYS_RENDER);
 		container.setMinimumLogicUpdateInterval(1000 / UPDATERATE_MIN);
 		container.setMaximumLogicUpdateInterval(1000 / UPDATERATE_MAX);
-
 		container.start();
 	}
 
@@ -93,11 +88,11 @@ public class Game extends StateBasedGame {
 		return container;
 	}
 
-	public static double getScale() {
+	public static float getScale() {
 		return scale;
 	}
 
-	public static void setScale(double scale) {
+	public static void setScale(float scale) {
 		Game.scale = scale;
 	}
 
@@ -111,19 +106,19 @@ public class Game extends StateBasedGame {
 		if (scale >= 0 && scale <= 2) {
 			enterState(0);
 			if (change > 0) {
-				setScale(getScale() + 0.05D);
+				setScale(getScale() + 0.05F);
 			} else {
-				setScale(getScale() - 0.05D);
+				setScale(getScale() - 0.05F);
 			}
 		} else if (scale < 0) {
 			enterState(1);
 			if (change > 0) {
-				setScale(getScale() + 0.05D);
+				setScale(getScale() + 0.05F);
 			}
 		} else if (scale > 2) {
 			enterState(2);
 			if (change < 0) {
-				setScale(getScale() - 0.05D);
+				setScale(getScale() - 0.05F);
 			}
 		}
 	}

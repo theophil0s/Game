@@ -1,7 +1,5 @@
 package milkyway.earth.game.input;
 
-import java.util.logging.Level;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -14,6 +12,8 @@ import milkyway.earth.object.Player;
 
 public class GameInput {
 
+	private boolean set;
+	
 	private Input input;
 
 	int x;
@@ -45,9 +45,16 @@ public class GameInput {
 		input = gc.getInput();
 
 	}
-
+	
 	public void update() {
+		
 
+		
+		if (!set) {
+			move();
+			set = !set;
+		}
+		
 		if (input.isKeyDown(Input.KEY_UP)) {
 			y -= 1;
 			GameLevel.offY -= 1;
@@ -93,6 +100,7 @@ public class GameInput {
 					StatePlay.gameClient.moveGameObject(go);
 				}
 			}
+			
 			// if (GameObjects.playerId == go.getId()) {
 			// go.setPostition(go.getPosition().getX() + x,
 			// go.getPosition().getY() + y);
