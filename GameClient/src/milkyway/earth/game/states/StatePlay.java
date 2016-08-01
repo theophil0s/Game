@@ -31,7 +31,7 @@ public class StatePlay extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
-		new GameResources().getResourses();
+		new GameResources();
 
 		input = new GameInput(gc, gc.getHeight());
 

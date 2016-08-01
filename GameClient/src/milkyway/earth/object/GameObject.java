@@ -13,13 +13,20 @@ import milkyway.earth.game.main.GameLevel;
 public class GameObject {
 
 	private int id;
+	private float posX;
+	private float posY;
+	private float screenX;
+	private float screenY;
+	private float width;
+	private float height;
+	private Point position;
+	private Color filter = null;
+	private Shape hitbox;
+
 	private Image image;
 	private SpriteSheet sprite;
 	private int spriteX;
 	private int spriteY;
-	private Point position;
-	private Color filter = null;
-	private Shape hitbox;
 
 	public void init(GameContainer gc) {
 
@@ -31,25 +38,58 @@ public class GameObject {
 
 	public void render(GameContainer gc, Graphics g, float worldScale) {
 
-		if (position != null) {
-			if (sprite != null) {
-				sprite.startUse();
-
-				sprite.getSubImage(spriteX, spriteY).drawEmbedded(position.getX() - GameLevel.offX,
-						position.getY() - GameLevel.offY, sprite.getSubImage(spriteX, spriteY).getWidth() * worldScale,
-						sprite.getSubImage(spriteX, spriteY).getHeight() * worldScale);
-
-				sprite.endUse();
-			}
-
 			if (image != null) {
-				image.draw(position.getX() - GameLevel.offX, position.getY() - GameLevel.offY,
-						image.getWidth() * worldScale, image.getHeight() * worldScale, filter);
+				image.draw(
+						position.getX() - GameLevel.offX, 
+						position.getY() - GameLevel.offY,
+						image.getWidth() * worldScale,
+						image.getHeight() * worldScale, filter);
 			}
 		}
 
+
+	public float getPosX() {
+		return posX;
 	}
 
+	public float getPosY() {
+		return posY;
+	}
+
+	public float getScreenX() {
+		return screenX;
+	}
+
+	public float getScreenY() {
+		return screenY;
+	}
+
+	public void setScreenY(float screenY) {
+		this.screenY = screenY;
+	}
+
+	public void setScreenX(float screenX) {
+		this.screenX = screenX;
+	}
+
+	public void setPosY(float posY) {
+		this.posY = posY;
+	}
+
+	public void setPosX(float posX) {
+		this.posX = posX;
+	}
+
+	// TODO Pixeltransformation
+	
+//	public float getXonScreen() {
+//		return posX / Game.getScale();
+//	}
+//	
+//	public float getYonScreen() {
+//		return posY / Game.getScale();
+//	}
+	
 	public Image getImage() {
 		return image;
 	}
@@ -59,6 +99,8 @@ public class GameObject {
 	}
 
 	public void setPostition(float x, float y) {
+		this.setPosX(x);
+		this.setPosY(y);
 		this.position = new Point(x, y);
 	}
 
@@ -110,6 +152,22 @@ public class GameObject {
 
 	public void setSpriteY(int spriteY) {
 		this.spriteY = spriteY;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
 	}
 
 }

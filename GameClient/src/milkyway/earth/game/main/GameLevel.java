@@ -7,11 +7,11 @@ import milkyway.earth.object.Block;
 
 public class GameLevel {
 
-	int sizeX = 200;
-	int sizeY = 200;
+	int sizeX = 10;
+	int sizeY = 10;
 
-	public static int offX;
-	public static int offY;
+	public static float offX;
+	public static float offY;
 
 	Block block[][];
 
@@ -50,12 +50,14 @@ public class GameLevel {
 										.getSubImage(block[x][y].getSpriteX(), block[x][y].getSpriteY()).getHeight()
 								* Game.getScale()));
 
-				if ((block[x][y]).getPosition().getX() - GameLevel.offX >= 0
+				if ((block[x][y]).getPosition().getX() - GameLevel.offX >= 0 - 30
 						&& (block[x][y]).getPosition().getX() - GameLevel.offX < gc.getWidth() - 30
-						&& (block[x][y]).getPosition().getY() - GameLevel.offY >= 0
+						&& (block[x][y]).getPosition().getY() - GameLevel.offY >= 0 - 30
 						&& (block[x][y]).getPosition().getY() - GameLevel.offY < gc.getHeight() - 30) {
+					
 					// -30 just for Reasons
 					// fckng autoformat!
+					
 					block[x][y].render(gc, g, (float) Game.getScale());
 
 				}
@@ -63,19 +65,19 @@ public class GameLevel {
 		}
 	}
 
-	public static int getOffX() {
+	public static float getOffX() {
 		return offX;
 	}
 
-	public static void setOffX(int offX) {
+	public static void setOffX(float offX) {
 		GameLevel.offX = offX;
 	}
 
-	public static int getOffY() {
+	public static float getOffY() {
 		return offY;
 	}
 
-	public static void setOffY(int offY) {
+	public static void setOffY(float offY) {
 		GameLevel.offY = offY;
 	}
 }

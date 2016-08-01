@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import milkyway.earth.game.main.Game;
 import milkyway.earth.game.main.GameLevel;
 import milkyway.earth.game.states.StatePlay;
 import milkyway.earth.game.utils.GameObjects;
@@ -16,8 +17,8 @@ public class GameInput {
 	
 	private Input input;
 
-	int x;
-	int y;
+	float x;
+	float y;
 
 	public static Boolean moveUp = false;
 	public static Boolean moveDown = false;
@@ -48,7 +49,7 @@ public class GameInput {
 	
 	public void update() {
 		
-
+		// TODO find a better solution
 		
 		if (!set) {
 			move();
@@ -56,32 +57,32 @@ public class GameInput {
 		}
 		
 		if (input.isKeyDown(Input.KEY_UP)) {
-			y -= 1;
-			GameLevel.offY -= 1;
+			y -= 1F * Game.getScale();
+			GameLevel.offY -= 1F * Game.getScale();
 			moveUp = true;
 			move();
 		} else
 			moveUp = false;
 
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			y += 1;
-			GameLevel.offY += 1;
+			y += 1F * Game.getScale();
+			GameLevel.offY += 1F * Game.getScale();
 			moveDown = true;
 			move();
 		} else
 			moveDown = false;
 
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			x -= 1;
-			GameLevel.offX -= 1;
+			x -= 1F * Game.getScale();
+			GameLevel.offX -= 1F * Game.getScale();
 			moveLeft = true;
 			move();
 		} else
 			moveLeft = false;
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			x += 1;
-			GameLevel.offX += 1;
+			x += 1F * Game.getScale();
+			GameLevel.offX += 1F * Game.getScale();
 			moveRight = true;
 			move();
 		} else
@@ -96,6 +97,7 @@ public class GameInput {
 				((Player) go).setLocal(true);
 				
 				go.setPostition(x, y);
+				
 				if (StatePlay.gameClient.isRunning()) {
 					StatePlay.gameClient.moveGameObject(go);
 				}

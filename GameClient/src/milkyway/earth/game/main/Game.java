@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import milkyway.earth.game.states.StateMap;
 import milkyway.earth.game.states.StateMenu;
 import milkyway.earth.game.states.StatePlay;
+import milkyway.earth.object.Block;
 
 public class Game extends StateBasedGame {
 
@@ -103,21 +104,23 @@ public class Game extends StateBasedGame {
 
 		// TODO GameLevel offX offY
 
-		if (scale >= 0 && scale <= 2) {
+		if (scale >= 0F && scale <= 2F) {
 			enterState(0);
-			if (change > 0) {
+			if (change > 0F) {
 				setScale(getScale() + 0.05F);
+				System.out.println(Block.blockSize);
 			} else {
 				setScale(getScale() - 0.05F);
+				System.out.println(Block.blockSize);
 			}
-		} else if (scale < 0) {
+		} else if (scale < 0F) {
 			enterState(1);
-			if (change > 0) {
+			if (change > 0F) {
 				setScale(getScale() + 0.05F);
 			}
-		} else if (scale > 2) {
+		} else if (scale > 2F) {
 			enterState(2);
-			if (change < 0) {
+			if (change < 0F) {
 				setScale(getScale() - 0.05F);
 			}
 		}

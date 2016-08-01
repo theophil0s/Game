@@ -31,11 +31,13 @@ public class GameOverlay {
 		fpsCounter++;
 		
 		pos = 30;
-		g.drawString("fpsCounter:" + String.valueOf(fpsCounter), hDist, pos);
+		g.drawString("fpsCounter: " + String.valueOf(fpsCounter), hDist, pos);
 		pos+=vDist;
-		g.drawString("updateCounter:" + String.valueOf(updateCounter), hDist, pos);
+		g.drawString("updateCounter: " + String.valueOf(updateCounter), hDist, pos);
 		pos+=vDist;
-		g.drawString("delta:" + String.valueOf(delta), hDist, pos);
+		g.drawString("delta: " + String.valueOf(delta), hDist, pos);
+		pos+=vDist;
+		g.drawString("Scale: " + Game.getScale(), hDist, pos);
 		pos+=vDist;
 		g.drawString("offX: " + GameLevel.offX, hDist, pos);
 		pos+=vDist;
