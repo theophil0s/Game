@@ -3,9 +3,9 @@ package milkyway.earth.object;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import milkyway.earth.game.main.GameLevel;
+import milkyway.earth.game.utils.Renderable;
 
-public class Block extends GameObject {
+public class Block extends GameObject implements Renderable{
 
 	public static float blockSize;
 
@@ -16,29 +16,18 @@ public class Block extends GameObject {
 	@Override
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
-	}
-
-	public void update() {
-	}
-
-	@Override
-	public void render(GameContainer gc, Graphics g, float worldScale) {
-
-		blockSize = getSprite().getSubImage(getSpriteX(), getSpriteY()).getWidth() * worldScale;
 		
-		if (getPosition() != null) {
-			if (getSprite() != null) {
-				getSprite().startUse();
 
-				getSprite().getSubImage(
-						getSpriteX(), getSpriteY()).drawEmbedded(
-							getPosition().getX() - GameLevel.offX,
-							getPosition().getY() - GameLevel.offY,
-							getSprite().getSubImage(getSpriteX(), getSpriteY()).getWidth() * worldScale,
-							getSprite().getSubImage(getSpriteX(), getSpriteY()).getHeight() * worldScale);
-
-				getSprite().endUse();
-			}
+	}
+	
+	@Override
+	public void render(GameContainer gc, Graphics g, float scale) {
+		this.scale = scale;
+		
+		if (sprite != null) {
+			sprite.startUse();
+			sprite.getSubImage(spriteX, spriteY).drawEmbedded(getPosXToScreen(), getPosYToScreen(), getWidthToScreen(), getHeightToScreen());
+			sprite.endUse();
 		}
 	}
 }

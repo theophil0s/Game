@@ -12,35 +12,36 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import milkyway.earth.game.input.GameInput;
+import milkyway.earth.game.main.Game;
+import milkyway.earth.game.main.GameCam;
 import milkyway.earth.game.main.GameLevel;
 import milkyway.earth.game.main.GameOverlay;
 import milkyway.earth.game.main.GameResources;
 import milkyway.earth.game.network.GameClient;
 import milkyway.earth.game.utils.GameObjects;
+import milkyway.earth.object.Player;
 
 public class StatePlay extends BasicGameState {
 
 	private String playerName;
 	public static GameClient gameClient;
 
-	public static GameLevel level;
-	public static GameObjects objects;
-	public static GameOverlay overlay;
-	public static GameInput input;
+	private GameLevel level;
+	private GameOverlay overlay;
+	private GameInput input;
+	private GameCam camera;
+	private Player player;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
 		new GameResources();
-
-		input = new GameInput(gc, gc.getHeight());
-
+		
 		level = new GameLevel();
-		objects = new GameObjects();
 		overlay = new GameOverlay();
+		camera = new GameCam();
 
 		level.init(gc);
-		objects.init(gc);
 		overlay.init(gc);
 
 		playerName = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to server",
@@ -50,36 +51,75 @@ public class StatePlay extends BasicGameState {
 		String host = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to server",
 				JOptionPane.QUESTION_MESSAGE, null, null, "localhost");
 
-		gameClient = new GameClient(playerName, host, 13001, null, objects);
+		gameClient = new GameClient(playerName, host, 13001, null, GameObjects.getGo());
+
 
 		try {
 			gameClient.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+		
+		if (player == null) {
+			for (long l : GameObjects.getObjectList().keySet()) {
+				if (GameObjects.getPlayerId() == GameObjects.getObjectList().get(l).getId()) {
 
-		input.update();
+					player = (Player) GameObjects.getObjectList().get(l);
+					player.setRenderType(Player.RENDER_TYPE_STATIC);
+					input = new GameInput(gc, gc.getHeight(), player);
+				}
+			}
+		}
+		
+		
+		
+		if (player != null) {
+			input.update();
+			player.update(gc, delta);
+			camera.update(player);
+		}
+
+		GameObjects.getGo().update(gc, delta, player);
 		
 		level.update(gc, delta);
-		objects.update(gc, delta);
 		overlay.update(gc, delta);
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-
-		level.render(gc, g);
-		objects.render(gc, g);
-		overlay.render(gc, g);
+		
+		// TODO add scale to rendermethod
+		
+		g.translate(-(camera.offX - gc.getWidth() / 2), -(camera.offY - gc.getHeight() / 2));
+		GameObjects.getGo().render(gc, g, Game.getScale(), player);
+		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) player.render(gc, g, Game.getScale());
+		g.translate((camera.offX - gc.getWidth() / 2), (camera.offY - gc.getHeight() / 2));
+		
+		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) player.render(gc, g, Game.getScale());
+		overlay.render(gc, g, camera);
+		
 	}
 
+	public void scale() {
+	}
+	
 	@Override
 	public int getID() {
 		return 0;
 	}
+
+	public GameInput getInput() {
+		return input;
+	}
+	
+	public GameCam getCamera() {
+		return camera;
+	}
+
 }

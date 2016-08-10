@@ -1,50 +1,81 @@
 package milkyway.earth.game.utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import milkyway.earth.game.main.Game;
 import milkyway.earth.object.GameObject;
+import milkyway.earth.object.Player;
 
 public class GameObjects {
 
-	public volatile static List<GameObject> objects;
+	private volatile static long playerId = -1;
+	private volatile static ConcurrentHashMap<Long, GameObject> objects;
+	private volatile static GameObjects go  = new GameObjects();
 
-	public volatile static int playerId = -1;
-
-	public GameObjects() {
-		objects = new ArrayList<GameObject>();
+	private GameObjects() {
+		objects = new ConcurrentHashMap<Long, GameObject>();
+	}
+	
+	public static GameObjects getGo() {
+		return go;
+	}
+	
+	public static ConcurrentHashMap<Long, GameObject> getObjectList() {
+		return objects;
 	}
 
-	public void addObject(GameObject object) {
-		objects.add(object);
+	public static int getSize() {
+		return objects.size();
+	}
+	
+	public static long getPlayerId() {
+		return playerId;
+	}
+
+	public static void setPlayerId(long playerId) {
+		GameObjects.playerId = playerId;
+	}
+
+	public static void addObject(GameObject object) {
+		objects.put(object.getId(), object);
 		System.out.println("GameObjects Objects: " + objects.size());
 	}
 
-	public void removeObject(GameObject object) {
-		objects.remove(object);
+	public static void removeObject(GameObject object) {
+		objects.remove(object.getId());
+		// 4DEBUG
 		System.out.println("GameObjects Objects: " + objects.size());
+		System.out.println(objects);
 	}
 
 	public void init(GameContainer gc) throws SlickException {
-		for (GameObject go : objects) {
-			go.init(gc);
+
+		for (long l : objects.keySet()) {
+			objects.get(l).init(gc);
 		}
 	}
 
-	public void update(GameContainer gc, int delta) {
-		for (GameObject go : objects) {
-			go.update(gc, delta);
+	public void update(GameContainer gc, int delta, Player player) {
+		for (long l : objects.keySet()) {
+			if (objects.get(l) != player) objects.get(l).update(gc, delta);;
 		}
 	}
 
-	public void render(GameContainer container, Graphics g) {
-		for (GameObject go : objects) {
-			go.render(container, g, (float) Game.getScale());
+	public void render(GameContainer gc, Graphics g, float scale, Player player) {
+		
+		for (long l : objects.keySet()) {
+			if (!(objects.get(l) instanceof Player)){
+				objects.get(l).render(gc, g, scale);
+			}
+		}
+		
+		for (long l : objects.keySet()) {
+			if (objects.get(l) instanceof Player && !(objects.get(l) == player)) {
+				objects.get(l).render(gc, g, scale);
+			}
 		}
 	}
 }

@@ -2,13 +2,13 @@ package milkyway.earth.network.message;
 
 public class PlayerIDMessage {
 
-	protected int id;
+	protected long id;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(long l) {
+		this.id = l;
 	}
 }

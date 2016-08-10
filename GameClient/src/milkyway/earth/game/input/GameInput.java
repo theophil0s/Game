@@ -4,18 +4,12 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import milkyway.earth.game.main.Game;
-import milkyway.earth.game.main.GameLevel;
-import milkyway.earth.game.states.StatePlay;
-import milkyway.earth.game.utils.GameObjects;
-import milkyway.earth.object.GameObject;
 import milkyway.earth.object.Player;
 
 public class GameInput {
 
-	private boolean set;
-	
 	private Input input;
+	private Player player;
 
 	float x;
 	float y;
@@ -41,75 +35,41 @@ public class GameInput {
 		return moveRight;
 	}
 
-	public GameInput(GameContainer gc, int height) throws SlickException {
-
+	public GameInput(GameContainer gc, int height, Player player) throws SlickException {
+		this.player = player;
+		System.out.println("Input init....");
 		input = gc.getInput();
 
 	}
-	
+
 	public void update() {
-		
-		// TODO find a better solution
-		
-		if (!set) {
-			move();
-			set = !set;
-		}
-		
+
 		if (input.isKeyDown(Input.KEY_UP)) {
-			y -= 1F * Game.getScale();
-			GameLevel.offY -= 1F * Game.getScale();
+			y -= 1F;
 			moveUp = true;
-			move();
+			player.move(x , y);
 		} else
 			moveUp = false;
 
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			y += 1F * Game.getScale();
-			GameLevel.offY += 1F * Game.getScale();
+			y += 1F;
 			moveDown = true;
-			move();
+			player.move(x , y);
 		} else
 			moveDown = false;
 
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			x -= 1F * Game.getScale();
-			GameLevel.offX -= 1F * Game.getScale();
+			x -= 1F;
 			moveLeft = true;
-			move();
+			player.move(x , y);
 		} else
 			moveLeft = false;
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			x += 1F * Game.getScale();
-			GameLevel.offX += 1F * Game.getScale();
+			x += 1F;
 			moveRight = true;
-			move();
+			player.move(x , y);
 		} else
 			moveRight = false;
-	}
-
-	public void move() {
-		for (GameObject go : GameObjects.objects) {
-			if (GameObjects.playerId == go.getId()) {
-
-				//TODO separate local and remote players
-				((Player) go).setLocal(true);
-				
-				go.setPostition(x, y);
-				
-				if (StatePlay.gameClient.isRunning()) {
-					StatePlay.gameClient.moveGameObject(go);
-				}
-			}
-			
-			// if (GameObjects.playerId == go.getId()) {
-			// go.setPostition(go.getPosition().getX() + x,
-			// go.getPosition().getY() + y);
-			// if (StatePlay.gameClient.isRunning()) {
-			// StatePlay.gameClient.moveGameObject(go);
-			// }
-			// }
-		}
 	}
 }

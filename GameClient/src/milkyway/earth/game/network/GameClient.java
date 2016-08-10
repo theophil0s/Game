@@ -28,7 +28,7 @@ public class GameClient {
 	private int port;
 	private String password;
 	// TODO replace
-	private GameObjects gameObjects;
+
 
 	private boolean running = false;
 
@@ -45,7 +45,7 @@ public class GameClient {
 		this.host = host;
 		this.port = port;
 		this.password = password;
-		this.gameObjects = gameObjects;
+
 	}
 
 	public void start() throws IOException {
@@ -95,8 +95,8 @@ public class GameClient {
 
 		MovePlayer movePlayer = new MovePlayer();
 		movePlayer.setId(go.getId());
-		movePlayer.setX(go.getPosition().getX());
-		movePlayer.setY(go.getPosition().getY());
+		movePlayer.setX(go.getPosX());
+		movePlayer.setY(go.getPosY());
 		this.client.sendTCP(movePlayer);
 	}
 
@@ -115,14 +115,14 @@ public class GameClient {
 				Player player = new Player();
 				player.setId(addPlayer.getId());
 				player.setName(addPlayer.getName());
-				player.setPostition(addPlayer.getX(), addPlayer.getY());
+				player.setPosition(addPlayer.getX(), addPlayer.getY());
 				// TODO replace
 				player.setImage(GameResources.character.getSubImage(0, 0));
-				gameObjects.addObject(player);
+				GameObjects.addObject(player);
 
 				// TODO replace
 				if (playerName.equals(addPlayer.getName())) {
-					GameObjects.playerId = addPlayer.getId();
+					GameObjects.setPlayerId(addPlayer.getId());
 				}
 
 				System.out.println(String.format("AddPlayer -> ID: %s Name: %s", player.getId(), player.getName()));
@@ -132,9 +132,11 @@ public class GameClient {
 			if (object instanceof UpdatePlayer) {
 				UpdatePlayer updatePlayer = (UpdatePlayer) object;
 				// TODO replace
-				for (GameObject go : GameObjects.objects) {
-					if (go.getId() == updatePlayer.getId()) {
-						go.setPostition(updatePlayer.getX(), updatePlayer.getY());
+				for (long l : GameObjects.getObjectList().keySet()) {
+					
+
+					if (GameObjects.getObjectList().get(l).getId() == updatePlayer.getId()) {
+						GameObjects.getObjectList().get(l).setPosition(updatePlayer.getX(), updatePlayer.getY());
 						System.out.println(String.format("UpdatePlayer -> ID: %s X: %.2f Y: %.2f", updatePlayer.getId(),
 								updatePlayer.getX(), updatePlayer.getY()));
 						break;
@@ -146,9 +148,11 @@ public class GameClient {
 			if (object instanceof RemovePlayer) {
 				RemovePlayer removePlayer = (RemovePlayer) object;
 				// TODO replace
-				for (GameObject go : GameObjects.objects) {
-					if (go.getId() == removePlayer.getId()) {
-						gameObjects.removeObject(go);
+				for (long l : GameObjects.getObjectList().keySet()) {
+					System.out.println(GameObjects.getObjectList().get(l).getId());
+					System.out.println(removePlayer.getId());
+					if (GameObjects.getObjectList().get(l).getId() == removePlayer.getId()) {
+						GameObjects.removeObject(GameObjects.getObjectList().get(l));
 						System.out.println(String.format("RemovePlayer -> ID: %s", removePlayer.getId()));
 						break;
 					}

@@ -10,7 +10,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import milkyway.earth.game.states.StateMap;
 import milkyway.earth.game.states.StateMenu;
 import milkyway.earth.game.states.StatePlay;
-import milkyway.earth.object.Block;
 
 public class Game extends StateBasedGame {
 
@@ -26,11 +25,13 @@ public class Game extends StateBasedGame {
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 
-	private static Game game;
 	private static float scale;
+	private static Game game;
 	private static Dimension size;
 	private static Dimension resolution;
 	private static AppGameContainer container;
+	
+	private static StatePlay statePlay;
 
 	public Game(String title) throws SlickException {
 		super(title);
@@ -39,7 +40,10 @@ public class Game extends StateBasedGame {
 	public static void main(String[] args) throws SlickException {
 
 		game = new Game(NAME);
+		statePlay = new StatePlay();
+
 		start(game);
+		
 	}
 
 	public static void start(Game game) throws SlickException {
@@ -56,8 +60,8 @@ public class Game extends StateBasedGame {
 			size = resolution;
 		}
 
-		setScale(size.width / 1920F * 1.5F);
-		
+		setScale(size.width / 1280F);
+
 		container.setDisplayMode(size.width, size.height, false);
 		container.setShowFPS(SHOW_FPS);
 		container.setFullscreen(FULLSCREEN);
@@ -97,29 +101,37 @@ public class Game extends StateBasedGame {
 		Game.scale = scale;
 	}
 
+	public static StatePlay getStatePlay() {
+		return statePlay;
+	}
+
 	@Override
 	public void mouseWheelMoved(int change) {
-
-		System.out.println("SCALE: " + scale);
 
 		// TODO GameLevel offX offY
 
 		if (scale >= 0F && scale <= 2F) {
+			
 			enterState(0);
+			
 			if (change > 0F) {
 				setScale(getScale() + 0.05F);
-				System.out.println(Block.blockSize);
 			} else {
 				setScale(getScale() - 0.05F);
-				System.out.println(Block.blockSize);
 			}
+
 		} else if (scale < 0F) {
+			
 			enterState(1);
+
 			if (change > 0F) {
 				setScale(getScale() + 0.05F);
 			}
+
 		} else if (scale > 2F) {
+			
 			enterState(2);
+
 			if (change < 0F) {
 				setScale(getScale() - 0.05F);
 			}
@@ -129,7 +141,7 @@ public class Game extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 
-		addState(new StatePlay());
+		addState(statePlay);
 		addState(new StateMap());
 		addState(new StateMenu());
 

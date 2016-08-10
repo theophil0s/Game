@@ -26,7 +26,7 @@ public class GameOverlay {
 		updateCounter++;
 	}
 
-	public void render(GameContainer container, Graphics g) {
+	public void render(GameContainer gc, Graphics g, GameCam camera) {
 		
 		fpsCounter++;
 		
@@ -39,15 +39,22 @@ public class GameOverlay {
 		pos+=vDist;
 		g.drawString("Scale: " + Game.getScale(), hDist, pos);
 		pos+=vDist;
-		g.drawString("offX: " + GameLevel.offX, hDist, pos);
+		g.drawString("OffX: " + camera.offX, hDist, pos);
 		pos+=vDist;
-		g.drawString("offX: " + GameLevel.offY, hDist, pos);
+		g.drawString("OffY: " + camera.offY, hDist, pos);
 		pos+=vDist;
-		for (int i = 0; i < GameObjects.objects.size(); i++) {
-			if (GameObjects.objects.get(i) instanceof Player) {
-				g.drawString("Player"+i+" x: "+GameObjects.objects.get(i).getPosition().getX()+" y: "+GameObjects.objects.get(i).getPosition().getY(), hDist, pos);
+		g.drawString("Objects: " + GameObjects.getObjectList().size(), hDist, pos);
+		pos+=vDist;
+		
+		for (long l : GameObjects.getObjectList().keySet()) {
+			if (GameObjects.getObjectList().get(l) instanceof Player) {
+				g.drawString("Player ID "+ l +" x: "+GameObjects.getObjectList().get(l).getPosX()+" y: "+GameObjects.getObjectList().get(l).getPosY(), hDist, pos);
 				pos+=vDist;
 			}
 		}
+		
+		g.drawLine(gc.getWidth() / 2, 0, gc.getWidth() / 2, gc.getHeight());
+		g.drawLine(0, gc.getHeight() / 2, gc.getWidth(), gc.getHeight() / 2);
+		
 	}
 }

@@ -11,6 +11,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
+import milkyway.earth.game.utils.GameID;
 import milkyway.earth.network.message.AddPlayer;
 import milkyway.earth.network.message.LogIn;
 import milkyway.earth.network.message.LogInError;
@@ -26,7 +27,7 @@ public class GameServer {
 	private Server server;
 
 	// TODO replace with correct logic
-	private int playerId = 0;
+	//	private int playerId = 0;
 
 	private int port;
 	private String name;
@@ -125,8 +126,8 @@ public class GameServer {
 				// TODO player init
 				Player player = new Player();
 				player.setName(name);
-				player.setId(playerId++);
-				player.setPostition(40, 40);
+				player.setId(GameID.getID());
+				player.setPosition(0, 0);
 				playerConnection.setPlayer(player);
 
 				for (PlayerConnection pC : playerConnections) {
