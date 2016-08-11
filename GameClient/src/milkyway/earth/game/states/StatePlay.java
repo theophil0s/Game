@@ -16,9 +16,9 @@ import milkyway.earth.game.main.Game;
 import milkyway.earth.game.main.GameCam;
 import milkyway.earth.game.main.GameLevel;
 import milkyway.earth.game.main.GameOverlay;
-import milkyway.earth.game.main.GameResources;
 import milkyway.earth.game.network.GameClient;
 import milkyway.earth.game.utils.GameObjects;
+import milkyway.earth.object.GameResources;
 import milkyway.earth.object.Player;
 
 public class StatePlay extends BasicGameState {
@@ -26,6 +26,7 @@ public class StatePlay extends BasicGameState {
 	private String playerName;
 	public static GameClient gameClient;
 
+	private GameObjects objects;
 	private GameLevel level;
 	private GameOverlay overlay;
 	private GameInput input;
@@ -33,9 +34,16 @@ public class StatePlay extends BasicGameState {
 	private Player player;
 
 	@Override
+	public int getID() {
+		return 0;
+	}
+
+	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 
 		new GameResources();
+		objects = GameObjects.getGo();
+		objects.init(gc, game);
 		
 		level = new GameLevel();
 		overlay = new GameOverlay();
@@ -69,25 +77,20 @@ public class StatePlay extends BasicGameState {
 		if (player == null) {
 			for (long l : GameObjects.getObjectList().keySet()) {
 				if (GameObjects.getPlayerId() == GameObjects.getObjectList().get(l).getId()) {
-
 					player = (Player) GameObjects.getObjectList().get(l);
 					player.setRenderType(Player.RENDER_TYPE_STATIC);
 					input = new GameInput(gc, gc.getHeight(), player);
 				}
 			}
-		}
-		
-		
-		
-		if (player != null) {
-			input.update();
-			player.update(gc, delta);
-			camera.update(player);
-		}
+		} else {
 
-		GameObjects.getGo().update(gc, delta, player);
+			input.update();
+			player.update(gc, game, delta);
+			camera.update(gc, player);
+		}
 		
-		level.update(gc, delta);
+		level.update(gc, delta, camera);
+		objects.update(gc, game, delta, player);
 		overlay.update(gc, delta);
 	}
 
@@ -95,24 +98,17 @@ public class StatePlay extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		
 		// TODO add scale to rendermethod
+
+		g.translate(-(camera.offX), -(camera.offY));
+		GameObjects.getGo().render(gc, game, g, Game.getScale(), player);
+		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) player.render(gc, game, g, Game.getScale());
+		g.translate((camera.offX), (camera.offY));
+		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) player.render(gc, game, g, Game.getScale());
 		
-		g.translate(-(camera.offX - gc.getWidth() / 2), -(camera.offY - gc.getHeight() / 2));
-		GameObjects.getGo().render(gc, g, Game.getScale(), player);
-		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) player.render(gc, g, Game.getScale());
-		g.translate((camera.offX - gc.getWidth() / 2), (camera.offY - gc.getHeight() / 2));
-		
-		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) player.render(gc, g, Game.getScale());
 		overlay.render(gc, g, camera);
 		
 	}
-
-	public void scale() {
-	}
 	
-	@Override
-	public int getID() {
-		return 0;
-	}
 
 	public GameInput getInput() {
 		return input;

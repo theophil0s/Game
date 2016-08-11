@@ -71,6 +71,7 @@ public class Game extends StateBasedGame {
 		container.setMinimumLogicUpdateInterval(1000 / UPDATERATE_MIN);
 		container.setMaximumLogicUpdateInterval(1000 / UPDATERATE_MAX);
 		container.start();
+
 	}
 
 	public static void stop() throws SlickException {
@@ -108,16 +109,14 @@ public class Game extends StateBasedGame {
 	@Override
 	public void mouseWheelMoved(int change) {
 
-		// TODO GameLevel offX offY
-
 		if (scale >= 0F && scale <= 2F) {
 			
 			enterState(0);
 			
 			if (change > 0F) {
-				setScale(getScale() + 0.05F);
+				setScale(getScale() + 0.2F);
 			} else {
-				setScale(getScale() - 0.05F);
+				setScale(getScale() - 0.2F);
 			}
 
 		} else if (scale < 0F) {
@@ -125,7 +124,7 @@ public class Game extends StateBasedGame {
 			enterState(1);
 
 			if (change > 0F) {
-				setScale(getScale() + 0.05F);
+				setScale(getScale() + 0.2F);
 			}
 
 		} else if (scale > 2F) {
@@ -133,7 +132,7 @@ public class Game extends StateBasedGame {
 			enterState(2);
 
 			if (change < 0F) {
-				setScale(getScale() - 0.05F);
+				setScale(getScale() - 0.2F);
 			}
 		}
 	}

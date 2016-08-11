@@ -52,9 +52,5 @@ public class GameOverlay {
 				pos+=vDist;
 			}
 		}
-		
-		g.drawLine(gc.getWidth() / 2, 0, gc.getWidth() / 2, gc.getHeight());
-		g.drawLine(0, gc.getHeight() / 2, gc.getWidth(), gc.getHeight() / 2);
-		
 	}
 }

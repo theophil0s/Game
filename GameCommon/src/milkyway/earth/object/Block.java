@@ -2,8 +2,8 @@ package milkyway.earth.object;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
-import milkyway.earth.game.utils.Renderable;
 
 public class Block extends GameObject implements Renderable{
 
@@ -14,14 +14,19 @@ public class Block extends GameObject implements Renderable{
 	}
 
 	@Override
-	public void update(GameContainer gc, int delta) {
-		super.update(gc, delta);
+	public void init(GameContainer gc, StateBasedGame game) {
+		// TODO Auto-generated method stub
 		
-
 	}
-	
+
 	@Override
-	public void render(GameContainer gc, Graphics g, float scale) {
+	public void update(GameContainer gc, StateBasedGame game, int delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 		
 		if (sprite != null) {

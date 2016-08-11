@@ -7,7 +7,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Listener.ThreadedListener;
 
-import milkyway.earth.game.main.GameResources;
 import milkyway.earth.game.utils.GameObjects;
 import milkyway.earth.network.message.AddPlayer;
 import milkyway.earth.network.message.LogIn;
@@ -17,6 +16,7 @@ import milkyway.earth.network.message.RemovePlayer;
 import milkyway.earth.network.message.UpdatePlayer;
 import milkyway.earth.network.util.MessageUtil;
 import milkyway.earth.object.GameObject;
+import milkyway.earth.object.GameResources;
 import milkyway.earth.object.Player;
 
 public class GameClient {
@@ -133,8 +133,6 @@ public class GameClient {
 				UpdatePlayer updatePlayer = (UpdatePlayer) object;
 				// TODO replace
 				for (long l : GameObjects.getObjectList().keySet()) {
-					
-
 					if (GameObjects.getObjectList().get(l).getId() == updatePlayer.getId()) {
 						GameObjects.getObjectList().get(l).setPosition(updatePlayer.getX(), updatePlayer.getY());
 						System.out.println(String.format("UpdatePlayer -> ID: %s X: %.2f Y: %.2f", updatePlayer.getId(),

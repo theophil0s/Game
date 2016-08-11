@@ -7,6 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class GameObject {
 
@@ -17,22 +18,32 @@ public class GameObject {
 	protected float scale;
 	private float posX;
 	private float posY;
+	protected float tempX;
+	protected float tempY;
 	private float width;
 	private float height;
 	private Point position;
-	private Shape hitbox;
-
+	protected Shape hitbox;
+	protected Shape outline;
+	
 	protected Image image;
-	private Animation animation;
+	protected Animation animation;
 	protected SpriteSheet sprite;
 	protected int spriteX;
 	protected int spriteY;
 
-	public void init(GameContainer gc) {}
+	protected Boolean moveUp = false;
+	protected Boolean moveDown = false;
+	protected Boolean moveLeft = false;
+	protected Boolean moveRight = false;
+	
+	public void init() {}
+	
+	public void init(GameContainer gc, StateBasedGame game) {}
 
-	public void update(GameContainer gc, int delta) {}
+	public void update(GameContainer gc, StateBasedGame game, int delta) {}
 
-	public void render(GameContainer gc, Graphics g, float scale) {this.scale = scale;}
+	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {this.scale = scale;}
 
 	
 	public float getPosXToScreen() {
@@ -181,5 +192,37 @@ public class GameObject {
 
 	public void setSpriteY(int spriteY) {
 		this.spriteY = spriteY;
+	}
+
+	public Boolean getMoveUp() {
+		return moveUp;
+	}
+
+	public void setMoveUp(Boolean moveUp) {
+		this.moveUp = moveUp;
+	}
+
+	public Boolean getMoveDown() {
+		return moveDown;
+	}
+
+	public void setMoveDown(Boolean moveDown) {
+		this.moveDown = moveDown;
+	}
+
+	public Boolean getMoveLeft() {
+		return moveLeft;
+	}
+
+	public void setMoveLeft(Boolean moveLeft) {
+		this.moveLeft = moveLeft;
+	}
+
+	public Boolean getMoveRight() {
+		return moveRight;
+	}
+
+	public void setMoveRight(Boolean moveRight) {
+		this.moveRight = moveRight;
 	}
 }

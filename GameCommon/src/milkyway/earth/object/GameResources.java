@@ -1,4 +1,4 @@
-package milkyway.earth.game.main;
+package milkyway.earth.object;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -13,6 +13,7 @@ public class GameResources {
 	public static Image player;
 	public static SpriteSheet sprite;
 	public static SpriteSheet character;
+	public static SpriteSheet colorTiles;
 
 	private static Image[] down;
 	private static Image[] up;
@@ -35,7 +36,7 @@ public class GameResources {
 			player = new Image("assets/img/t.jpg");
 			sprite = new SpriteSheet("assets/img/tiles64_terrain.png", 64, 64);
 			character = new SpriteSheet("assets/img/character_sprite2.png", 32, 48);
-
+			colorTiles = new SpriteSheet("assets/img/colors.png", 64, 64);
 			
 		} catch (SlickException e) {
 

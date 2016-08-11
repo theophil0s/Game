@@ -1,4 +1,4 @@
-package milkyway.earth.game.utils;
+package milkyway.earth.network.util;
 
 public class GameID {
 	private static long lastID;
@@ -11,7 +11,7 @@ public class GameID {
 		return ID;
 	}
 	
-	public static long getID () {
+	public static synchronized long getID () {
 		long id = System.currentTimeMillis();
 		while (id <= lastID) {
 			id++;

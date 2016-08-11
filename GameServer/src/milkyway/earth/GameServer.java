@@ -11,13 +11,13 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 
-import milkyway.earth.game.utils.GameID;
 import milkyway.earth.network.message.AddPlayer;
 import milkyway.earth.network.message.LogIn;
 import milkyway.earth.network.message.LogInError;
 import milkyway.earth.network.message.MovePlayer;
 import milkyway.earth.network.message.RemovePlayer;
 import milkyway.earth.network.message.UpdatePlayer;
+import milkyway.earth.network.util.GameID;
 import milkyway.earth.network.util.MessageUtil;
 import milkyway.earth.object.Player;
 import milkyway.earth.object.PlayerConnection;
