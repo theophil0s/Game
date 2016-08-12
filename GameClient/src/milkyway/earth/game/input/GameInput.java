@@ -27,6 +27,7 @@ public class GameInput {
 			y -= 1F;
 			player.setMoveUp(true);
 			player.move(x , y);
+			send();
 		} else
 			player.setMoveUp(false);
 
@@ -34,6 +35,7 @@ public class GameInput {
 			y += 1F;
 			player.setMoveDown(true);
 			player.move(x , y);
+			send();
 		} else
 			player.setMoveDown(false);
 
@@ -41,6 +43,7 @@ public class GameInput {
 			x -= 1F;
 			player.setMoveLeft(true);
 			player.move(x , y);
+			send();
 		} else
 			player.setMoveLeft(false);
 
@@ -48,12 +51,18 @@ public class GameInput {
 			x += 1F;
 			player.setMoveRight(true);
 			player.move(x , y);
+			send();
 		} else {
 			player.setMoveRight(false);
 		}
 		
-	if(StatePlay.gameClient.isRunning())
-		StatePlay.gameClient.moveGameObject(player);
 	}
 
+	private void send() {
+		if(StatePlay.gameClient.isRunning())
+			StatePlay.gameClient.moveGameObject(player);
+		
+	}
 }
+
+

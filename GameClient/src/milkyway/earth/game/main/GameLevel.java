@@ -7,12 +7,13 @@ import org.newdawn.slick.GameContainer;
 import milkyway.earth.game.utils.GameObjects;
 import milkyway.earth.network.util.GameID;
 import milkyway.earth.object.Block;
+import milkyway.earth.object.GameObject;
 import milkyway.earth.object.GameResources;
 
 public class GameLevel {
 
-	int sizeX = 10;
-	int sizeY = 10;
+	int sizeX = 100;
+	int sizeY = 100;
 	
 	private Block block[][];
 
@@ -27,35 +28,35 @@ public class GameLevel {
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
 				block[x][y] = new Block();
-				block[x][y].setSprite(GameResources.colorTiles, new Random().nextInt(5), 0);
+				block[x][y].setSprite(GameResources.colorTiles, new Random().nextInt(1), 0);
 				block[x][y].setId(GameID.getID());
 				block[x][y].setPosition(
 						(float) (x * block[x][y].getWidth()),
 						(float) (y * block[x][y].getHeight()));
 				
-				GameObjects.addObject(block[x][y]);
+//				GameObjects.addObject(block[x][y]);
 			}
 		}
 	}
 
-	public void update(GameContainer gc, int delta, GameCam camera) {
+	public void update(GameContainer gc, int delta, GameObject object, GameCam camera) {
 		
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
-//				if ((block[x][y]).getPosX() - camera.offX >= 0 - 30
-//						&& (block[x][y]).getPosX() - camera.offX < gc.getWidth() - 30
-//						&& (block[x][y]).getPosY() - camera.offY >= 0 - 30
-//						&& (block[x][y]).getPosY() - camera.offY < gc.getHeight() - 30) {
-//					
-//					// -30 just for Reasons
-//					// fckng autoformat!
-//					
-//					GameObjects.addObject(block[x][y]);
-//
-//				} else {
-//					
-//					GameObjects.removeObject(block[x][y]);
-//				}
+				if (object != null 
+						&& block[x][y].getPosX() > object.getPosX() - object.getViewDistance()
+						&& block[x][y].getPosX() < object.getPosX() + object.getViewDistance()
+						&& block[x][y].getPosY() > object.getPosY() - object.getViewDistance()
+						&& block[x][y].getPosY() < object.getPosY() + object.getViewDistance()) {
+					
+					if (!GameObjects.getObjectList().containsKey((block[x][y]).getId())) {
+						GameObjects.addObject(block[x][y]);
+					}
+					
+				} else {
+					
+					GameObjects.removeObject(block[x][y]);
+				}
 			}
 		}
 	}

@@ -34,5 +34,10 @@ public class Block extends GameObject implements Renderable{
 			sprite.getSubImage(spriteX, spriteY).drawEmbedded(getPosXToScreen(), getPosYToScreen(), getWidthToScreen(), getHeightToScreen());
 			sprite.endUse();
 		}
+		
+//		g.setFont(GameResources.ttf);
+//		g.drawString(String.valueOf(getId()), getPosXToScreen(), getPosYToScreen());
+//		g.drawString(String.valueOf(getPosXToScreen()), getPosXToScreen(), getPosYToScreen() + 10);
+//		g.drawString(String.valueOf(getPosYToScreen()), getPosXToScreen(), getPosYToScreen() + 20);
 	}
 }

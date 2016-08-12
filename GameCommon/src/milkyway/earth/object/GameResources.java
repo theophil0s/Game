@@ -1,9 +1,12 @@
 package milkyway.earth.object;
 
+import java.awt.Font;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.TrueTypeFont;
 
 public class GameResources {
 
@@ -24,6 +27,9 @@ public class GameResources {
 	public static Animation animationUp;
 	public static Animation animationLeft;
 	public static  Animation animationRight;
+	
+	public static Font awtFont = new Font("ARIAL", Font.BOLD, 10);
+	public static TrueTypeFont ttf  = new TrueTypeFont(awtFont, true);
 	
 	public GameResources getResourses() {
 		return res;

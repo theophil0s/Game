@@ -48,6 +48,7 @@ public class Game extends StateBasedGame {
 
 	public static void start(Game game) throws SlickException {
 
+		
 		resolution = new Dimension(WIDTH, HEIGHT);
 		container = new AppGameContainer(game);
 

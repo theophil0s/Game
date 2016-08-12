@@ -86,10 +86,10 @@ public class StatePlay extends BasicGameState {
 
 			input.update();
 			player.update(gc, game, delta);
-			camera.update(gc, player);
+			camera.update(gc, Game.getScale(), player);
 		}
 		
-		level.update(gc, delta, camera);
+		level.update(gc, delta, player, camera);
 		objects.update(gc, game, delta, player);
 		overlay.update(gc, delta);
 	}
@@ -97,13 +97,18 @@ public class StatePlay extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		
-		// TODO add scale to rendermethod
-
 		g.translate(-(camera.offX), -(camera.offY));
+		
 		GameObjects.getGo().render(gc, game, g, Game.getScale(), player);
-		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) player.render(gc, game, g, Game.getScale());
+		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) {
+			player.render(gc, game, g, Game.getScale());
+		}
+		
 		g.translate((camera.offX), (camera.offY));
-		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) player.render(gc, game, g, Game.getScale());
+		
+		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) {
+			player.render(gc, game, g, Game.getScale());
+		}
 		
 		overlay.render(gc, g, camera);
 		

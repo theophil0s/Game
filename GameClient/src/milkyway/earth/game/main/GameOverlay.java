@@ -4,11 +4,12 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import milkyway.earth.game.utils.GameObjects;
+import milkyway.earth.object.GameResources;
 import milkyway.earth.object.Player;
 
 public class GameOverlay {
 
-	final static int vDist = 20;
+	final static int vDist = 15;
 	final static int hDist = 10;
 	static int pos;
 	
@@ -16,9 +17,12 @@ public class GameOverlay {
 	int updateCounter;
 	int delta;
 
+	
 	public void init(GameContainer gc) {
 		fpsCounter = 0;
 		updateCounter = 0;
+		
+		gc.setDefaultFont(GameResources.ttf);
 	}
 
 	public void update(GameContainer gc, int delta) {
@@ -29,6 +33,8 @@ public class GameOverlay {
 	public void render(GameContainer gc, Graphics g, GameCam camera) {
 		
 		fpsCounter++;
+		
+		g.setFont(GameResources.ttf);
 		
 		pos = 30;
 		g.drawString("fpsCounter: " + String.valueOf(fpsCounter), hDist, pos);
@@ -43,6 +49,10 @@ public class GameOverlay {
 		pos+=vDist;
 		g.drawString("OffY: " + camera.offY, hDist, pos);
 		pos+=vDist;
+		g.drawString("CamW: " + camera.camWidth, hDist, pos);
+		pos+=vDist;
+		g.drawString("CamH: " + camera.camHeight, hDist, pos);
+		pos+=vDist;
 		g.drawString("Objects: " + GameObjects.getObjectList().size(), hDist, pos);
 		pos+=vDist;
 		
@@ -52,5 +62,7 @@ public class GameOverlay {
 				pos+=vDist;
 			}
 		}
+		
+		
 	}
 }

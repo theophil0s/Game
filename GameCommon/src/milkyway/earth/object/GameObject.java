@@ -14,6 +14,7 @@ public class GameObject {
 	public static final int RENDER_TYPE_STATIC = 1;
 	
 	private long id;
+	private int viewDistance;
 	protected int renderType;
 	protected float scale;
 	private float posX;
@@ -36,8 +37,6 @@ public class GameObject {
 	protected Boolean moveDown = false;
 	protected Boolean moveLeft = false;
 	protected Boolean moveRight = false;
-	
-	public void init() {}
 	
 	public void init(GameContainer gc, StateBasedGame game) {}
 
@@ -64,6 +63,14 @@ public class GameObject {
 
 	public long getId() {
 		return id;
+	}
+
+	public int getViewDistance() {
+		return viewDistance;
+	}
+
+	public void setViewDistance(int viewDistance) {
+		this.viewDistance = viewDistance;
 	}
 
 	public int getRenderType() {

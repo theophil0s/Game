@@ -43,6 +43,7 @@ public class GameObjects {
 	}
 
 	public static void addObject(GameObject object) {
+		System.out.println(object.getId());
 		object.init(gc , game);
 		objects.put(object.getId(), object);
 	}
@@ -66,6 +67,7 @@ public class GameObjects {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale, Player player) {
 		
 		for (long l : objects.keySet()) {
+			
 			if (!(objects.get(l) instanceof Player)){
 				objects.get(l).render(gc, game, g, scale);
 			}

@@ -46,6 +46,7 @@ public class Player extends GameObject implements Renderable {
 	public void init(GameContainer gc, StateBasedGame game) {
 
 		outline = new Rectangle(0, 0, 100, 100);
+		setViewDistance(500);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
