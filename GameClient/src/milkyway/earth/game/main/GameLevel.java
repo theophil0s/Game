@@ -28,7 +28,7 @@ public class GameLevel {
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
 				block[x][y] = new Block();
-				block[x][y].setSprite(GameResources.colorTiles, new Random().nextInt(1), 0);
+				block[x][y].setSprite(GameResources.colorTiles, new Random().nextInt(3), 0);
 				block[x][y].setId(GameID.getID());
 				block[x][y].setPosition(
 						(float) (x * block[x][y].getWidth()),
@@ -43,6 +43,14 @@ public class GameLevel {
 		
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
+				
+//				if (
+//						(int)block[x][y].getPosXToScreen() >= (int)camera.offX
+//						&& (int)block[x][y].getPosXToScreen() <= (int)camera.camWidth
+//						&& (int)block[x][y].getPosYToScreen() >= (int)camera.offY
+//						&& (int)block[x][y].getPosYToScreen() <= (int)camera.camHeight) {
+
+				
 				if (object != null 
 						&& block[x][y].getPosX() > object.getPosX() - object.getViewDistance()
 						&& block[x][y].getPosX() < object.getPosX() + object.getViewDistance()

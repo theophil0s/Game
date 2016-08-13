@@ -14,11 +14,9 @@ public class GameCam {
 	
 	public void update(GameContainer gc, float scale, GameObject go) {
 		
-		offX = go.getPosXToScreen() + go.getWidthToScreen() / 2  - gc.getWidth() / 2;
-		offY = go.getPosYToScreen() + go.getHeightToScreen() / 2  - gc.getHeight() / 2;
-		
-		camWidth = offX + gc.getWidth() / scale;
-		camHeight = offY + gc.getHeight() / scale;
-		
+		if (go != null) {
+			offX = go.getPosXToScreen() + go.getWidthToScreen() / 2  - gc.getWidth() / 2;
+			offY = go.getPosYToScreen() + go.getHeightToScreen() / 2  - gc.getHeight() / 2;
+		}
 	}
 }

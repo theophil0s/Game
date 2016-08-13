@@ -86,7 +86,7 @@ public class StatePlay extends BasicGameState {
 
 			input.update();
 			player.update(gc, game, delta);
-			camera.update(gc, Game.getScale(), player);
+			
 		}
 		
 		level.update(gc, delta, player, camera);
@@ -111,6 +111,7 @@ public class StatePlay extends BasicGameState {
 		}
 		
 		overlay.render(gc, g, camera);
+		camera.update(gc, Game.getScale(), player);
 		
 	}
 	

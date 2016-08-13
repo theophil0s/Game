@@ -24,8 +24,10 @@ public class Game extends StateBasedGame {
 	private static final Boolean ALWAYS_RENDER = true;
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
+	private static final double[] scaleSteps = {0.1 , 0.2 , 0.4 , 0.6 , 0.8 , 1 , 1.2 , 1.4, 1.6 , 1.8 , 2 , 2.4};
 
-	private static float scale;
+	private static int scaleStep = 5;
+	private static double scale;
 	private static Game game;
 	private static Dimension size;
 	private static Dimension resolution;
@@ -61,7 +63,7 @@ public class Game extends StateBasedGame {
 			size = resolution;
 		}
 
-		setScale(size.width / 1280F);
+		setScale(scaleSteps[scaleStep]);
 
 		container.setDisplayMode(size.width, size.height, false);
 		container.setShowFPS(SHOW_FPS);
@@ -96,11 +98,11 @@ public class Game extends StateBasedGame {
 	}
 
 	public static float getScale() {
-		return scale;
+		return (float) scale;
 	}
 
-	public static void setScale(float scale) {
-		Game.scale = scale;
+	public static void setScale(double scale) {
+		Game.scale = (float) scale;
 	}
 
 	public static StatePlay getStatePlay() {
@@ -109,33 +111,31 @@ public class Game extends StateBasedGame {
 
 	@Override
 	public void mouseWheelMoved(int change) {
+		
 
-		if (scale >= 0F && scale <= 2F) {
+		if (change > 0 && scaleStep < scaleSteps.length -1) {
 			
 			enterState(0);
+			scaleStep++;
 			
-			if (change > 0F) {
-				setScale(getScale() + 0.2F);
-			} else {
-				setScale(getScale() - 0.2F);
-			}
-
-		} else if (scale < 0F) {
-			
-			enterState(1);
-
-			if (change > 0F) {
-				setScale(getScale() + 0.2F);
-			}
-
-		} else if (scale > 2F) {
+		} else if (change > 0 && scaleStep == scaleSteps.length -1) {
 			
 			enterState(2);
-
-			if (change < 0F) {
-				setScale(getScale() - 0.2F);
-			}
+			scaleStep++;
+		
+		} else if (change < 0 && scaleStep > 0) {
+			
+			enterState(0);
+			scaleStep--;
+			
+		} else if (change < 0 && scaleStep == 0){
+			 
+			enterState(1);
+			scaleStep--;
 		}
+		
+		if (scaleStep >= 0 && scaleStep < scaleSteps.length) setScale(scaleSteps[scaleStep]);
+			
 	}
 
 	@Override
