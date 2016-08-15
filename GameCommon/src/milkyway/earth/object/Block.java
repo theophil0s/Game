@@ -15,8 +15,8 @@ public class Block extends GameObject implements Renderable{
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) {
-		// TODO Auto-generated method stub
 		
+		setRenderLayer(GameObject.RENDER_LAYER_1);
 	}
 
 	@Override

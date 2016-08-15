@@ -13,11 +13,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import milkyway.earth.game.input.GameInput;
 import milkyway.earth.game.main.Game;
-import milkyway.earth.game.main.GameCam;
-import milkyway.earth.game.main.GameLevel;
 import milkyway.earth.game.main.GameOverlay;
 import milkyway.earth.game.network.GameClient;
 import milkyway.earth.game.utils.GameObjects;
+import milkyway.earth.game.world.GameCam;
+import milkyway.earth.game.world.GameLevel;
 import milkyway.earth.object.GameResources;
 import milkyway.earth.object.Player;
 
@@ -90,7 +90,6 @@ public class StatePlay extends BasicGameState {
 			player.update(gc, game, delta);
 			
 		}
-		
 		level.update(gc, delta, player, camera);
 		overlay.update(gc, delta);
 	}
@@ -99,17 +98,24 @@ public class StatePlay extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		
 		g.translate(-(camera.offX), -(camera.offY));
+		GameObjects.getGo().renderLayer01(gc, game, g, Game.getScale(), player);
+		GameObjects.getGo().renderLayer02Before(gc, game, g, Game.getScale(), player);
 		
-		GameObjects.getGo().render(gc, game, g, Game.getScale(), player);
 		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) {
 			player.render(gc, game, g, Game.getScale());
 		}
-		
 		g.translate((camera.offX), (camera.offY));
 		
+
 		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) {
 			player.render(gc, game, g, Game.getScale());
 		}
+		
+		
+		g.translate(-(camera.offX), -(camera.offY));
+		GameObjects.getGo().renderLayer02After(gc, game, g, Game.getScale(), player);
+		GameObjects.getGo().renderLayer03(gc, game, g, Game.getScale(), player);
+		g.translate((camera.offX), (camera.offY));
 		
 		overlay.render(gc, g, camera);
 		camera.update(gc, Game.getScale(), player);

@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import milkyway.earth.game.utils.GameObjects;
+import milkyway.earth.game.world.GameCam;
 import milkyway.earth.object.GameResources;
 import milkyway.earth.object.Player;
 
@@ -55,7 +56,15 @@ public class GameOverlay {
 		pos+=vDist;
 		g.drawString("CamH: " + camera.camHeight, hDist, pos);
 		pos+=vDist;
-		g.drawString("Objects: " + GameObjects.getObjectList().size(), hDist, pos);
+		g.drawString("Objects: " + GameObjects.getSize(), hDist, pos);
+		pos+=vDist;
+		g.drawString("Layer1: " + GameObjects.getLayer01Size(), hDist, pos);
+		pos+=vDist;
+		g.drawString("L2Before: " + GameObjects.getLayer02BeforeSize(), hDist, pos);
+		pos+=vDist;
+		g.drawString("L2After: " + GameObjects.getLayer02AfterSize(), hDist, pos);
+		pos+=vDist;
+		g.drawString("Layer3: " + GameObjects.getLayer03Size(), hDist, pos);
 		pos+=vDist;
 		
 		for (long l : GameObjects.getObjectList().keySet()) {

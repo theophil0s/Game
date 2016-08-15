@@ -1,4 +1,4 @@
-package milkyway.earth.game.main;
+package milkyway.earth.game.world;
 
 import java.util.Random;
 

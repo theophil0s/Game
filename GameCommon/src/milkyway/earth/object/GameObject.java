@@ -12,10 +12,14 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class GameObject {
 
 	public static final int RENDER_TYPE_STATIC = 1;
+	public static final int RENDER_LAYER_1 = 1;
+	public static final int RENDER_LAYER_2 = 2;
+	public static final int RENDER_LAYER_3 = 3;
 	
 	private long id;
 	protected int viewDistance;
 	protected int renderType;
+	protected int renderLayer;
 	protected float scale;
 	protected float posX;
 	protected float posY;
@@ -83,6 +87,14 @@ public abstract class GameObject {
 		this.renderType = renderType;
 	}
 
+	public void setRenderLayer(int renderLayer) {
+		this.renderLayer = renderLayer;
+	}
+	
+	public int getRenderLayer() {
+		return renderLayer;
+	}
+	
 	public void setId(long i) {
 		this.id = i;
 	}

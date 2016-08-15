@@ -135,8 +135,8 @@ public class GameClient {
 				for (long l : GameObjects.getObjectList().keySet()) {
 					if (GameObjects.getObjectList().get(l).getId() == updatePlayer.getId()) {
 						GameObjects.getObjectList().get(l).setPosition(updatePlayer.getX(), updatePlayer.getY());
-						System.out.println(String.format("UpdatePlayer -> ID: %s X: %.2f Y: %.2f", updatePlayer.getId(),
-								updatePlayer.getX(), updatePlayer.getY()));
+//						System.out.println(String.format("UpdatePlayer -> ID: %s X: %.2f Y: %.2f", updatePlayer.getId(),
+//								updatePlayer.getX(), updatePlayer.getY()));
 						break;
 					}
 				}
