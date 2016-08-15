@@ -15,13 +15,13 @@ public class Block extends GameObject implements Renderable{
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) {
+		super.init(gc, game);
 		
-		setRenderLayer(GameObject.RENDER_LAYER_1);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
-		// TODO Auto-generated method stub
+		super.update(gc, game, delta);
 		
 	}
 
@@ -35,6 +35,7 @@ public class Block extends GameObject implements Renderable{
 			sprite.endUse();
 		}
 		
+//		g.draw(outline);
 //		g.setFont(GameResources.ttf);
 //		g.drawString(String.valueOf(getId()), getPosXToScreen(), getPosYToScreen());
 //		g.drawString(String.valueOf(getPosXToScreen()), getPosXToScreen(), getPosYToScreen() + 10);

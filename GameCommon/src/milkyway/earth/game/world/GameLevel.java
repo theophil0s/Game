@@ -27,13 +27,26 @@ public class GameLevel {
 
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
+				
 				block[x][y] = new Block();
-				block[x][y].setSprite(GameResources.colorTiles, new Random().nextInt(3), 0);
-//				block[x][y].setSprite(GameResources.sprite, 4, 0);
+				
+				int random = new Random().nextInt(3);
+				
+				block[x][y].setSprite(GameResources.colorTiles, random, 0);
 				block[x][y].setId(GameID.getID());
 				block[x][y].setPosition(
 						(float) (x * block[x][y].getWidth()),
 						(float) (y * block[x][y].getHeight()));
+				
+				if (random == 0) {
+					block[x][y].setRenderLayer(GameObject.RENDER_LAYER_1);
+				} else
+				if (random == 1){
+					block[x][y].setRenderLayer(GameObject.RENDER_LAYER_2);
+				} else
+				if (random == 2){
+					block[x][y].setRenderLayer(GameObject.RENDER_LAYER_3);
+				} 
 			}
 		}
 	}

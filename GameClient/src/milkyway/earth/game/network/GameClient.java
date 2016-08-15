@@ -115,7 +115,7 @@ public class GameClient {
 				Player player = new Player();
 				player.setId(addPlayer.getId());
 				player.setName(addPlayer.getName());
-				player.setPosition(addPlayer.getX(), addPlayer.getY());
+				player.initPosition(addPlayer.getX(), addPlayer.getY());
 				// TODO replace
 				player.setImage(GameResources.character.getSubImage(0, 0));
 				GameObjects.addObject(player);
@@ -147,8 +147,6 @@ public class GameClient {
 				RemovePlayer removePlayer = (RemovePlayer) object;
 				// TODO replace
 				for (long l : GameObjects.getObjectList().keySet()) {
-					System.out.println(GameObjects.getObjectList().get(l).getId());
-					System.out.println(removePlayer.getId());
 					if (GameObjects.getObjectList().get(l).getId() == removePlayer.getId()) {
 						GameObjects.removeObject(GameObjects.getObjectList().get(l));
 						System.out.println(String.format("RemovePlayer -> ID: %s", removePlayer.getId()));

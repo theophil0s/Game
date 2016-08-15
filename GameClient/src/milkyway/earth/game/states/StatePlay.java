@@ -59,7 +59,7 @@ public class StatePlay extends BasicGameState {
 		String host = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to server",
 				JOptionPane.QUESTION_MESSAGE, null, null, "localhost");
 
-		gameClient = new GameClient(playerName, host, 13001, null, GameObjects.getGo());
+		gameClient = new GameClient(playerName, host, 13001, null, objects);
 
 
 		try {
@@ -98,8 +98,8 @@ public class StatePlay extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		
 		g.translate(-(camera.offX), -(camera.offY));
-		GameObjects.getGo().renderLayer01(gc, game, g, Game.getScale(), player);
-		GameObjects.getGo().renderLayer02Before(gc, game, g, Game.getScale(), player);
+		GameObjects.renderLayer01(gc, game, g, Game.getScale(), player);
+		GameObjects.renderLayer02Before(gc, game, g, Game.getScale(), player);
 		
 		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) {
 			player.render(gc, game, g, Game.getScale());
@@ -113,8 +113,8 @@ public class StatePlay extends BasicGameState {
 		
 		
 		g.translate(-(camera.offX), -(camera.offY));
-		GameObjects.getGo().renderLayer02After(gc, game, g, Game.getScale(), player);
-		GameObjects.getGo().renderLayer03(gc, game, g, Game.getScale(), player);
+		GameObjects.renderLayer02After(gc, game, g, Game.getScale(), player);
+		GameObjects.renderLayer03(gc, game, g, Game.getScale(), player);
 		g.translate((camera.offX), (camera.offY));
 		
 		overlay.render(gc, g, camera);

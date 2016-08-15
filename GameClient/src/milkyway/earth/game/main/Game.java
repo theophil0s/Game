@@ -18,12 +18,12 @@ public class Game extends StateBasedGame {
 	private static final int UPDATERATE_MAX = 60;
 	private static final int UPDATERATE_MIN = 60;
 	private static final Boolean SHOW_FPS = true;
-	private static final Boolean FULLSCREEN = false;
+	private static final Boolean FULLSCREEN = true;
 	private static final Boolean FULLSCREEN_WINDOW = false;
 	private static final Boolean VSYNC = false;
 	private static final Boolean ALWAYS_RENDER = true;
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;
+	private static final int WIDTH = 1920;
+	private static final int HEIGHT = 1080;
 	private static final double[] scaleSteps = {0.1 , 0.2 , 0.4 , 0.6 , 0.8 , 1 , 1.2 , 1.4, 1.6 , 1.8 , 2 , 2.4};
 
 	private static int scaleStep = 5;

@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -29,6 +30,10 @@ public abstract class GameObject {
 	protected float tempY;
 	protected float width;
 	protected float height;
+	protected float renderX;
+	protected float renderY;
+	protected float renderW;
+	protected float renderH;
 	protected Point position;
 	protected Shape hitbox;
 	protected Shape outline;
@@ -44,9 +49,26 @@ public abstract class GameObject {
 	protected Boolean moveLeft = false;
 	protected Boolean moveRight = false;
 	
-	public void init(GameContainer gc, StateBasedGame game) {}
+	public void init(GameContainer gc, StateBasedGame game) {
+		outline = new Rectangle(0, 0, 0, 0);
+	}
 
-	public void update(GameContainer gc, StateBasedGame game, int delta) {}
+	public void update(GameContainer gc, StateBasedGame game, int delta) {
+		
+		if (renderType == GameObject.RENDER_TYPE_STATIC) {
+			renderX = gc.getWidth() / 2 - getWidthToScreen() / 2;
+			renderY = gc.getHeight() / 2 - getHeightToScreen() / 2;
+			renderW = getWidthToScreen();
+			renderH = getHeightToScreen();
+		} else {
+			renderX = getPosXToScreen();
+			renderY = getPosYToScreen();
+			renderW = getWidthToScreen();
+			renderH = getHeightToScreen();
+		}
+		
+		((Rectangle) outline).setBounds(renderX, renderY, renderW, renderH);
+	}
 
 	public abstract void render(GameContainer gc, StateBasedGame game, Graphics g, float scale);
 
@@ -167,18 +189,17 @@ public abstract class GameObject {
 		this.posY = position.getY();
 	}
 	
-	public void sendPosition(float posX, float posY) {
-		this.setPosXToSend(posX);
-		this.setPosYToSend(posY);
-	}
-
-	
 	public void setPosition(float posX, float posY) {
 		this.posX = posX;
 		this.posY = posY;
 		this.position = new Point(posX, posY);
 	}
 
+	public void initPosition(float posXToSend, float posYToSend) {
+		this.posXToSend = posXToSend;
+		this.posYToSend = posYToSend;
+	}
+	
 	public Shape getHitbox() {
 		return hitbox;
 	}

@@ -23,6 +23,7 @@ public class GameObjects {
 	private static StateBasedGame game;
 
 	private GameObjects() {
+		
 		objects = new ConcurrentHashMap<Long, GameObject>();
 		layer01 = new HashMap<Long, GameObject>();
 		layer02Before = new HashMap<Long, GameObject>();
@@ -107,25 +108,20 @@ public class GameObjects {
 
 		for (long l : objects.keySet()) {
 			
-			if (objects.get(l) != object)
-				
+			if (objects.get(l) != object) {
 				objects.get(l).update(gc, game, delta);
+			}
 
 			if (objects.get(l).getRenderLayer() == GameObject.RENDER_LAYER_1) {
-				
 				layer01.put(objects.get(l).getId(), objects.get(l));
-
 			} else
 
 			if (objects.get(l).getRenderLayer() == GameObject.RENDER_LAYER_2) {
 				
 				if (object != null && objects.get(l).getPosY() + objects.get(l).getHeight() < object.getPosY() + object.getHeight()) {
-				
 					layer02After.remove(objects.get(l).getId(), objects.get(l));
 					layer02Before.put(objects.get(l).getId(), objects.get(l));
-				
 				} else {
-					
 					layer02Before.remove(objects.get(l).getId(), objects.get(l));
 					layer02After.put(objects.get(l).getId(), objects.get(l));
 				}
@@ -133,20 +129,19 @@ public class GameObjects {
 			} else
 
 			if (objects.get(l).getRenderLayer() == GameObject.RENDER_LAYER_3) {
-				
 				layer03.put(objects.get(l).getId(), objects.get(l));
 			}
 		}
 	}
 
-	public void renderLayer01(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
+	public static void renderLayer01(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
 
 		for (long l : layer01.keySet()) {
 			layer01.get(l).render(gc, game, g, scale);
 		}
 	}
 
-	public void renderLayer02Before(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
+	public static void renderLayer02Before(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
 
 		for (long l : layer02Before.keySet()) {
 			if (object != null && objects.get(l) != object) {
@@ -155,7 +150,7 @@ public class GameObjects {
 		}
 	}
 
-	public void renderLayer02After(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
+	public static void renderLayer02After(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
 
 		for (long l : layer02After.keySet()) {
 			if (object != null && objects.get(l) != object) {
@@ -164,7 +159,7 @@ public class GameObjects {
 		}
 	}
 
-	public void renderLayer03(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
+	public static void renderLayer03(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
 		
 		for (long l : layer03.keySet()) {
 			layer03.get(l).render(gc, game, g, scale);

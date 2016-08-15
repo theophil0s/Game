@@ -3,7 +3,6 @@ package milkyway.earth.object;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Player extends GameObject implements Renderable {
@@ -12,11 +11,6 @@ public class Player extends GameObject implements Renderable {
 
 	int tempCounter;
 	
-	float renderX;
-	float renderY;
-	float renderW;
-	float renderH;
-
 	public Player() {
 
 	}
@@ -29,25 +23,17 @@ public class Player extends GameObject implements Renderable {
 		this.name = name;
 	}
 
-	public void move(float posXToSend, float posYToSend) {
-		this.posXToSend = posXToSend;
-		this.posYToSend = posYToSend;
-	}
-
 	public void init(GameContainer gc, StateBasedGame game) {
-
-		setRenderLayer(GameObject.RENDER_LAYER_2);
+		super.init(gc, game);
 		
-		setViewDistance(1000);
-
-		outline = new Rectangle(0, 0, 0, 0);
+		renderType = GameObject.RENDER_LAYER_2;
+		viewDistance = 1000;
 		hitbox = new Circle(0, 0, 0);
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 		super.update(gc, game, delta);
 
-		((Rectangle) outline).setBounds(renderX, renderY, renderW, renderH);
 		((Circle) hitbox).setLocation(renderX + renderW / 6, renderY + renderH / 2);
 		((Circle) hitbox).setRadius(renderW /3);
 
@@ -118,22 +104,11 @@ public class Player extends GameObject implements Renderable {
 
 		tempX = getPosX();
 		tempY = getPosY();
+
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
-
-		if (renderType == Player.RENDER_TYPE_STATIC) {
-			renderX = gc.getWidth() / 2 - getWidthToScreen() / 2;
-			renderY = gc.getHeight() / 2 - getHeightToScreen() / 2;
-			renderW = getWidthToScreen();
-			renderH = getHeightToScreen();
-		} else {
-			renderX = getPosXToScreen();
-			renderY = getPosYToScreen();
-			renderW = getWidthToScreen();
-			renderH = getHeightToScreen();
-		}
 
 		if (animation != null) {
 
@@ -145,8 +120,8 @@ public class Player extends GameObject implements Renderable {
 
 		}
 
-//		g.draw(outline);
-//		g.draw(hitbox);
+		g.draw(outline);
+		g.draw(hitbox);
 	}
 
 }

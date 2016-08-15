@@ -127,7 +127,7 @@ public class GameServer {
 				Player player = new Player();
 				player.setName(name);
 				player.setId(GameID.getID() - 1000000000000L);
-				player.setPosition(0, 0);
+				player.setPosition(600, 600);
 				playerConnection.setPlayer(player);
 
 				for (PlayerConnection pC : playerConnections) {

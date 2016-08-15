@@ -58,13 +58,13 @@ public class GameOverlay {
 		pos+=vDist;
 		g.drawString("Objects: " + GameObjects.getSize(), hDist, pos);
 		pos+=vDist;
-		g.drawString("Layer1: " + GameObjects.getLayer01Size(), hDist, pos);
+		g.drawString("L1: " + GameObjects.getLayer01Size(), hDist, pos);
 		pos+=vDist;
-		g.drawString("L2Before: " + GameObjects.getLayer02BeforeSize(), hDist, pos);
+		g.drawString("L2B: " + GameObjects.getLayer02BeforeSize(), hDist, pos);
 		pos+=vDist;
-		g.drawString("L2After: " + GameObjects.getLayer02AfterSize(), hDist, pos);
+		g.drawString("L2A: " + GameObjects.getLayer02AfterSize(), hDist, pos);
 		pos+=vDist;
-		g.drawString("Layer3: " + GameObjects.getLayer03Size(), hDist, pos);
+		g.drawString("L3: " + GameObjects.getLayer03Size(), hDist, pos);
 		pos+=vDist;
 		
 		for (long l : GameObjects.getObjectList().keySet()) {

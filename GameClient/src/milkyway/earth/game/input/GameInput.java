@@ -18,7 +18,6 @@ public class GameInput {
 	public GameInput(GameContainer gc, int height, Player player) throws SlickException {
 		this.player = player;
 		input = gc.getInput();
-
 	}
 
 	public void update(int delta) {
@@ -29,7 +28,7 @@ public class GameInput {
 		if (input.isKeyDown(Input.KEY_UP)) {
 			y -= 0.1F * delta;
 			player.setMoveUp(true);
-			player.move(x , y);
+			player.initPosition(x , y);
 
 		} else
 			player.setMoveUp(false);
@@ -37,7 +36,7 @@ public class GameInput {
 		if (input.isKeyDown(Input.KEY_DOWN)) {
 			y += 0.1F * delta;
 			player.setMoveDown(true);
-			player.move(x , y);
+			player.initPosition(x , y);
 
 		} else
 			player.setMoveDown(false);
@@ -45,7 +44,7 @@ public class GameInput {
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			x -= 0.1F * delta;
 			player.setMoveLeft(true);
-			player.move(x , y);
+			player.initPosition(x , y);
 
 		} else
 			player.setMoveLeft(false);
@@ -53,20 +52,26 @@ public class GameInput {
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			x += 0.1F * delta;
 			player.setMoveRight(true);
-			player.move(x , y);
+			player.initPosition(x , y);
 
 		} else {
 			player.setMoveRight(false);
 		}
 		
-		send();
+		if ((input.isKeyDown(Input.KEY_UP) 
+			|| input.isKeyDown(Input.KEY_DOWN)
+			|| input.isKeyDown(Input.KEY_LEFT)
+			|| input.isKeyDown(Input.KEY_RIGHT))) {
+			
+					send();
+		}
 		
 	}
-
+	
 	private void send() {
-		if(StatePlay.gameClient.isRunning())
+		if(StatePlay.gameClient.isRunning()) {
 			StatePlay.gameClient.moveGameObject(player);
-		
+		}
 	}
 }
 
