@@ -17,7 +17,6 @@ public class GameID {
 			id++;
 		}
 		lastID = id;
-		System.out.println("ID: " + id);
 		return id;
 	}
 }

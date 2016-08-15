@@ -95,8 +95,8 @@ public class GameClient {
 
 		MovePlayer movePlayer = new MovePlayer();
 		movePlayer.setId(go.getId());
-		movePlayer.setX(go.getPosX());
-		movePlayer.setY(go.getPosY());
+		movePlayer.setX(go.getPosXToSend());
+		movePlayer.setY(go.getPosYToSend());
 		this.client.sendTCP(movePlayer);
 	}
 

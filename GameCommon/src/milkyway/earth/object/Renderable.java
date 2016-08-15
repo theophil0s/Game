@@ -6,8 +6,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public interface Renderable {
 
-	public boolean isRenderable = true;
-
 	public void init(GameContainer gc, StateBasedGame game);
 
 	public void update(GameContainer gc, StateBasedGame game, int delta);

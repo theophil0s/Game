@@ -74,6 +74,8 @@ public class StatePlay extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		
+		objects.update(gc, game, delta, player);
+
 		if (player == null) {
 			for (long l : GameObjects.getObjectList().keySet()) {
 				if (GameObjects.getPlayerId() == GameObjects.getObjectList().get(l).getId()) {
@@ -84,13 +86,12 @@ public class StatePlay extends BasicGameState {
 			}
 		} else {
 
-			input.update();
+			input.update(delta);
 			player.update(gc, game, delta);
 			
 		}
 		
 		level.update(gc, delta, player, camera);
-		objects.update(gc, game, delta, player);
 		overlay.update(gc, delta);
 	}
 

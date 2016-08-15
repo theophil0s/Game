@@ -43,7 +43,6 @@ public class GameObjects {
 	}
 
 	public static void addObject(GameObject object) {
-		System.out.println(object.getId());
 		object.init(gc , game);
 		objects.put(object.getId(), object);
 	}

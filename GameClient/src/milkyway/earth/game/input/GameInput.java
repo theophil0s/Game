@@ -12,8 +12,8 @@ public class GameInput {
 	private Input input;
 	private Player player;
 
-	float x;
-	float y;
+	float x = 0;
+	float y = 0;
 
 	public GameInput(GameContainer gc, int height, Player player) throws SlickException {
 		this.player = player;
@@ -21,40 +21,45 @@ public class GameInput {
 
 	}
 
-	public void update() {
+	public void update(int delta) {
 
+		x = player.getPosX();
+		y= player.getPosY();
+		
 		if (input.isKeyDown(Input.KEY_UP)) {
-			y -= 1F;
+			y -= 0.1F * delta;
 			player.setMoveUp(true);
 			player.move(x , y);
-			send();
+
 		} else
 			player.setMoveUp(false);
 
 		if (input.isKeyDown(Input.KEY_DOWN)) {
-			y += 1F;
+			y += 0.1F * delta;
 			player.setMoveDown(true);
 			player.move(x , y);
-			send();
+
 		} else
 			player.setMoveDown(false);
 
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			x -= 1F;
+			x -= 0.1F * delta;
 			player.setMoveLeft(true);
 			player.move(x , y);
-			send();
+
 		} else
 			player.setMoveLeft(false);
 
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			x += 1F;
+			x += 0.1F * delta;
 			player.setMoveRight(true);
 			player.move(x , y);
-			send();
+
 		} else {
 			player.setMoveRight(false);
 		}
+		
+		send();
 		
 	}
 

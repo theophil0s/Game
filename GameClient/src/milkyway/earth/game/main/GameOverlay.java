@@ -45,6 +45,8 @@ public class GameOverlay {
 		pos+=vDist;
 		g.drawString("Scale: " + Game.getScale(), hDist, pos);
 		pos+=vDist;
+		g.drawString("Zoom: " + Game.getZoom(), hDist, pos);
+		pos+=vDist;
 		g.drawString("OffX: " + camera.offX, hDist, pos);
 		pos+=vDist;
 		g.drawString("OffY: " + camera.offY, hDist, pos);

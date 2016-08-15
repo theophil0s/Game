@@ -17,6 +17,9 @@ public class GameCam {
 		if (go != null) {
 			offX = go.getPosXToScreen() + go.getWidthToScreen() / 2  - gc.getWidth() / 2;
 			offY = go.getPosYToScreen() + go.getHeightToScreen() / 2  - gc.getHeight() / 2;
+			
+			camWidth = offX *2;
+			camHeight = offY*2;
 		}
 	}
 }

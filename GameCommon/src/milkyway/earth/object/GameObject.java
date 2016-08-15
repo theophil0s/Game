@@ -9,21 +9,23 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameObject {
+public abstract class GameObject {
 
 	public static final int RENDER_TYPE_STATIC = 1;
 	
 	private long id;
-	private int viewDistance;
+	protected int viewDistance;
 	protected int renderType;
 	protected float scale;
-	private float posX;
-	private float posY;
+	protected float posX;
+	protected float posY;
+	protected float posXToSend;
+	protected float posYToSend;
 	protected float tempX;
 	protected float tempY;
-	private float width;
-	private float height;
-	private Point position;
+	protected float width;
+	protected float height;
+	protected Point position;
 	protected Shape hitbox;
 	protected Shape outline;
 	
@@ -42,7 +44,7 @@ public class GameObject {
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {}
 
-	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {this.scale = scale;}
+	public abstract void render(GameContainer gc, StateBasedGame game, Graphics g, float scale);
 
 	
 	public float getPosXToScreen() {
@@ -111,6 +113,22 @@ public class GameObject {
 		this.position = new Point(getPosX(), posY);
 	}
 
+	public float getPosXToSend() {
+		return posXToSend;
+	}
+
+	public void setPosXToSend(float posXToSend) {
+		this.posXToSend = posXToSend;
+	}
+
+	public float getPosYToSend() {
+		return posYToSend;
+	}
+
+	public void setPosYToSend(float posYToSend) {
+		this.posYToSend = posYToSend;
+	}
+
 	public float getWidth() {
 		return width;
 	}
@@ -130,12 +148,18 @@ public class GameObject {
 	public Point getPosition() {
 		return position;
 	}
-
+	
 	public void setPosition(Point position) {
 		this.position = position;
 		this.posX = position.getX();
 		this.posY = position.getY();
 	}
+	
+	public void sendPosition(float posX, float posY) {
+		this.setPosXToSend(posX);
+		this.setPosYToSend(posY);
+	}
+
 	
 	public void setPosition(float posX, float posY) {
 		this.posX = posX;

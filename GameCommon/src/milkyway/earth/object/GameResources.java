@@ -57,17 +57,8 @@ public class GameResources {
 		if (character != null) {
 			for (int i = 0; i < 3; i++) {
 				down[i] = character.getSubImage(i, 0);
-			}
-	
-			for (int i = 0; i < 3; i++) {
 				up[i] = character.getSubImage(i, 3);
-			}
-			
-			for (int i = 0; i < 3; i++) {
 				left[i] = character.getSubImage(i, 1);
-			}
-			
-			for (int i = 0; i < 3; i++) {
 				right[i] = character.getSubImage(i, 2);
 			}
 		}
