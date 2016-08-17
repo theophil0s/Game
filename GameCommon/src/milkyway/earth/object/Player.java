@@ -1,22 +1,19 @@
 package milkyway.earth.object;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.ShapeRenderer;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Player extends GameObject implements IRenderable {
 
-	private String name;
-	private int delta;
 	private int tempCounter;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public Player() {
+		
 	}
 
 	public void init(GameContainer gc, StateBasedGame game) {
@@ -66,7 +63,7 @@ public class Player extends GameObject implements IRenderable {
 		if (posX == this.posX && posY == this.posY) {
 			
 			tempCounter++;
-			if (tempCounter == 100 / delta) {
+			if (tempCounter == 5) {
 				moveRight = false; moveLeft = false; moveUp = false; moveDown = false;
 				tempCounter = 0;
 			}
@@ -76,7 +73,6 @@ public class Player extends GameObject implements IRenderable {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
-		this.delta = delta;
 		super.update(gc, game, delta);
 
 		((Circle) hitbox).setLocation(renderX + renderW / 6, renderY + renderH / 2);
@@ -110,6 +106,10 @@ public class Player extends GameObject implements IRenderable {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 
+		GL11.glBlendFunc(GL11.GL_CONSTANT_COLOR, GL11.GL_ONE);
+		GL14.glBlendEquation(GL14.GL_FUNC_ADD);
+		GL14.glBlendColor(1.000F, 0.012F, 0.973F, 0.835F);
+		
 		if (animation != null) {
 
 			animation.draw(renderX, renderY, renderW, renderH, null);
@@ -119,8 +119,9 @@ public class Player extends GameObject implements IRenderable {
 			image.draw(renderX, renderY, renderW, renderH, null);
 
 		}
-
-//		g.draw(outline);
-//		g.draw(hitbox);
+		
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		ShapeRenderer.draw(outline);
+		g.draw(hitbox);
 	}
 }

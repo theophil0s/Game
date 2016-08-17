@@ -29,6 +29,7 @@ public class Block extends GameObject implements IRenderable{
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 		
+		
 		if (sprite != null) {
 			sprite.startUse();
 			sprite.getSubImage(spriteX, spriteY).drawEmbedded(renderX, renderY, renderW, renderH);

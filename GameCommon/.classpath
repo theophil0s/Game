@@ -11,5 +11,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/reflectasm-1.07.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slick.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/lwjgl.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

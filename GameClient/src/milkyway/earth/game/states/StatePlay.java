@@ -94,10 +94,9 @@ public class StatePlay extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		
-		GL11.glEnable(GL11.GL_TEXTURE_2D);               
-       	GL11.glEnable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_BLEND);
        	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		
+       	
 		if (true) {
 			
 			GL11.glTranslated(-(camera.offX), -(camera.offY), 0);

@@ -8,6 +8,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Tree extends GameObject implements IRenderable{
 
 	public Tree() {
+
+		
 	}
 	
 	public Tree(long id, float posX, float posY, int renderLayer, Image image) {
@@ -36,6 +38,7 @@ public class Tree extends GameObject implements IRenderable{
 			image.endUse();
 		}
 		
+//		ShapeRenderer.draw(outline);
 //		g.draw(outline);
 		
 	}

@@ -18,6 +18,7 @@ public abstract class GameObject {
 	public static final int RENDER_LAYER_3 = 3;
 
 	private long id;
+	protected String  name;
 	protected int viewDistance;
 	protected int renderType;
 	protected int renderLayer;
@@ -149,6 +150,14 @@ public abstract class GameObject {
 		this.id = i;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public float getScale() {
 		return scale;
 	}
