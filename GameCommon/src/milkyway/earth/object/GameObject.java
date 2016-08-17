@@ -16,7 +16,7 @@ public abstract class GameObject {
 	public static final int RENDER_LAYER_1 = 1;
 	public static final int RENDER_LAYER_2 = 2;
 	public static final int RENDER_LAYER_3 = 3;
-	
+
 	private long id;
 	protected int viewDistance;
 	protected int renderType;
@@ -26,18 +26,16 @@ public abstract class GameObject {
 	protected float posY;
 	protected float posXToSend;
 	protected float posYToSend;
-	protected float tempX;
-	protected float tempY;
-	protected float width;
-	protected float height;
 	protected float renderX;
 	protected float renderY;
 	protected float renderW;
 	protected float renderH;
+	protected float width;
+	protected float height;
 	protected Point position;
 	protected Shape hitbox;
 	protected Shape outline;
-	
+
 	protected Image image;
 	protected Animation animation;
 	protected SpriteSheet sprite;
@@ -48,14 +46,45 @@ public abstract class GameObject {
 	protected Boolean moveDown = false;
 	protected Boolean moveLeft = false;
 	protected Boolean moveRight = false;
-	
+
+	public GameObject() {
+	}
+
+	public GameObject(long id, float posX, float posY, int renderLayer) {
+		this.id = id;
+		this.posX = posX;
+		this.posY = posY;
+		this.renderLayer = renderLayer;
+	}
+
+	public GameObject(long id, float posX, float posY, int renderLayer, Image image) {
+		this.id = id;
+		this.posX = posX;
+		this.posY = posY;
+		this.renderLayer = renderLayer;
+		this.image = image;
+		this.width = image.getWidth();
+		this.height = image.getHeight();
+	}
+
+	public GameObject(long id, float posX, float posY, int renderLayer, Animation animation) {
+		this.id = id;
+		this.posX = posX;
+		this.posY = posY;
+		this.renderLayer = renderLayer;
+		this.animation = animation;
+		this.width = animation.getWidth();
+		this.height = animation.getHeight();
+	}
+
 	public void init(GameContainer gc, StateBasedGame game) {
+
 		outline = new Rectangle(0, 0, 0, 0);
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
-		
-		if (renderType == GameObject.RENDER_TYPE_STATIC) {
+
+		if (renderType == Player.RENDER_TYPE_STATIC) {
 			renderX = gc.getWidth() / 2 - getWidthToScreen() / 2;
 			renderY = gc.getHeight() / 2 - getHeightToScreen() / 2;
 			renderW = getWidthToScreen();
@@ -66,13 +95,12 @@ public abstract class GameObject {
 			renderW = getWidthToScreen();
 			renderH = getHeightToScreen();
 		}
-		
+
 		((Rectangle) outline).setBounds(renderX, renderY, renderW, renderH);
 	}
 
 	public abstract void render(GameContainer gc, StateBasedGame game, Graphics g, float scale);
 
-	
 	public float getPosXToScreen() {
 		return posX * scale;
 	}
@@ -112,11 +140,11 @@ public abstract class GameObject {
 	public void setRenderLayer(int renderLayer) {
 		this.renderLayer = renderLayer;
 	}
-	
+
 	public int getRenderLayer() {
 		return renderLayer;
 	}
-	
+
 	public void setId(long i) {
 		this.id = i;
 	}
@@ -182,24 +210,24 @@ public abstract class GameObject {
 	public Point getPosition() {
 		return position;
 	}
-	
+
 	public void setPosition(Point position) {
 		this.position = position;
 		this.posX = position.getX();
 		this.posY = position.getY();
 	}
-	
+
 	public void setPosition(float posX, float posY) {
 		this.posX = posX;
 		this.posY = posY;
 		this.position = new Point(posX, posY);
 	}
 
-	public void initPosition(float posXToSend, float posYToSend) {
+	public void setPositionToSend(float posXToSend, float posYToSend) {
 		this.posXToSend = posXToSend;
 		this.posYToSend = posYToSend;
 	}
-	
+
 	public Shape getHitbox() {
 		return hitbox;
 	}
@@ -241,7 +269,7 @@ public abstract class GameObject {
 		this.width = sprite.getSubImage(spriteX, spriteY).getWidth();
 		this.height = sprite.getSubImage(spriteX, spriteY).getHeight();
 	}
-		
+
 	public int getSpriteX() {
 		return spriteX;
 	}

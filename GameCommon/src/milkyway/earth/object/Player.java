@@ -5,15 +5,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Player extends GameObject implements Renderable {
+public class Player extends GameObject implements IRenderable {
 
 	private String name;
-
-	int tempCounter;
-	
-	public Player() {
-
-	}
+	private int delta;
+	private int tempCounter;
 
 	public String getName() {
 		return name;
@@ -25,86 +21,90 @@ public class Player extends GameObject implements Renderable {
 
 	public void init(GameContainer gc, StateBasedGame game) {
 		super.init(gc, game);
-		
-		renderType = GameObject.RENDER_LAYER_2;
+
+		renderLayer = GameObject.RENDER_LAYER_2;
 		viewDistance = 1000;
 		hitbox = new Circle(0, 0, 0);
 	}
 
-	public void update(GameContainer gc, StateBasedGame game, int delta) {
-		super.update(gc, game, delta);
 
-		((Circle) hitbox).setLocation(renderX + renderW / 6, renderY + renderH / 2);
-		((Circle) hitbox).setRadius(renderW /3);
+	@Override
+	public void setPosition(float posX, float posY) {
 
-		if (tempX == posX && tempY > posY && animation != GameResources.animationUp) {
-			setAnimation(GameResources.animationUp);
-			tempCounter = 0;
+		if (posX == this.posX && posY < this.posY) {
+			moveRight = false; moveLeft = false; moveUp = true; moveDown = false;
 		} else
 
-		if (tempX == posX && tempY < posY && animation != GameResources.animationDown) {
-			setAnimation(GameResources.animationDown);
-			tempCounter = 0;
+		if (posX == this.posX && posY > this.posY) {
+			moveRight = false; moveLeft = false; moveUp = false; moveDown = true;
 		} else
 
-		if (tempX > posX && tempY == posY && animation != GameResources.animationLeft) {
-			setAnimation(GameResources.animationLeft);
-			tempCounter = 0;
+		if (posX < this.posX && posY == this.posY) {
+			moveRight = false; moveLeft = true; moveUp = false; moveDown = false;
 		} else
 
-		if (tempX < posX && tempY == posY && animation != GameResources.animationRight) {
-			setAnimation(GameResources.animationRight);
-			tempCounter = 0;
+		if (posX > this.posX && posY == this.posY) {
+			moveRight = true; moveLeft = false; moveUp = false; moveDown = false;
 		} else
 
-		if (tempX > posX && tempY > posY && animation != GameResources.animationLeft) {
-			setAnimation(GameResources.animationLeft);
-			tempCounter = 0;
+		if (posX < this.posX && posY < this.posY) {
+			moveRight = false; moveLeft = true; moveUp = true; moveDown = false;
 		} else
 
-		if (tempX > posX && tempY < posY && animation != GameResources.animationLeft) {
-			setAnimation(GameResources.animationLeft);
-			tempCounter = 0;
+		if (posX < this.posX && posY > this.posY) {
+			moveRight = false; moveLeft = true; moveUp = false; moveDown = true;
 		} else
 
-		if (tempX < posX && tempY < posY && animation != GameResources.animationRight) {
-			setAnimation(GameResources.animationRight);
-			tempCounter = 0;
+		if (posX > this.posX && posY > this.posY) {
+			moveRight = true; moveLeft = false; moveUp = false; moveDown = true;
 		} else
 
-		if (tempX < posX && tempY > posY && animation != GameResources.animationRight) {
-			setAnimation(GameResources.animationRight);
-			tempCounter = 0;
+		if (posX > this.posX && posY < this.posY) {
+			moveRight = true; moveLeft = false; moveUp = true; moveDown = false;
 		} else
+		
+		if (posX == this.posX && posY == this.posY) {
 			
-		if (tempX == posX && tempY == posY) {
-
 			tempCounter++;
-			if (tempCounter > 5){
-				if (animation == GameResources.animationLeft && image != GameResources.animationLeft.getImage(1)) {
-					
-					image = GameResources.animationLeft.getImage(1);
-				}
-				if (animation == GameResources.animationRight && image != GameResources.animationRight.getImage(1)) {
-					
-					image = GameResources.animationRight.getImage(1);
-				}
-				if (animation == GameResources.animationUp && image != GameResources.animationUp.getImage(1)){
-					
-					image = GameResources.animationUp.getImage(1);
-				}
-				if (animation == GameResources.animationDown && image != GameResources.animationDown.getImage(1)){
-					
-					image = GameResources.animationDown.getImage(1);
-				}
-				setAnimation(null);
+			if (tempCounter == 100 / delta) {
+				moveRight = false; moveLeft = false; moveUp = false; moveDown = false;
 				tempCounter = 0;
 			}
 		}
 
-		tempX = getPosX();
-		tempY = getPosY();
+		super.setPosition(posX, posY);
+	}
 
+	public void update(GameContainer gc, StateBasedGame game, int delta) {
+		this.delta = delta;
+		super.update(gc, game, delta);
+
+		((Circle) hitbox).setLocation(renderX + renderW / 6, renderY + renderH / 2);
+		((Circle) hitbox).setRadius(renderW / 3);
+		
+		if (moveRight) {
+			animation = GameResources.animationRight;
+		} else
+			
+		if (moveLeft) {
+			animation = GameResources.animationLeft;
+		} else
+		
+		if (moveUp) {
+			animation = GameResources.animationUp;
+		} else
+		
+		if (moveDown) {
+			animation = GameResources.animationDown;
+		} else {
+		
+			if (animation != null && image != animation.getImage(1)) {
+				
+				image = animation.getImage(1);
+			}
+			animation = null;
+
+		}
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
@@ -120,8 +120,7 @@ public class Player extends GameObject implements Renderable {
 
 		}
 
-		g.draw(outline);
-		g.draw(hitbox);
+//		g.draw(outline);
+//		g.draw(hitbox);
 	}
-
 }

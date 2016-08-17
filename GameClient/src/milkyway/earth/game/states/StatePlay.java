@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -44,7 +45,7 @@ public class StatePlay extends BasicGameState {
 		new GameResources();
 		objects = GameObjects.getGo();
 		objects.init(gc, game);
-		
+
 		level = new GameLevel();
 		overlay = new GameOverlay();
 		camera = new GameCam();
@@ -61,7 +62,6 @@ public class StatePlay extends BasicGameState {
 
 		gameClient = new GameClient(playerName, host, 13001, null, objects);
 
-
 		try {
 			gameClient.start();
 		} catch (IOException e) {
@@ -70,10 +70,9 @@ public class StatePlay extends BasicGameState {
 
 	}
 
-
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		
+
 		objects.update(gc, game, delta, player);
 
 		if (player == null) {
@@ -87,46 +86,48 @@ public class StatePlay extends BasicGameState {
 		} else {
 
 			input.update(delta);
-			player.update(gc, game, delta);
-			
+			level.update(gc, delta, player, camera);
+			overlay.update(gc, delta);
 		}
-		level.update(gc, delta, player, camera);
-		overlay.update(gc, delta);
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		
-		g.translate(-(camera.offX), -(camera.offY));
-		GameObjects.renderLayer01(gc, game, g, Game.getScale(), player);
-		GameObjects.renderLayer02Before(gc, game, g, Game.getScale(), player);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);               
+       	GL11.glEnable(GL11.GL_BLEND);
+       	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		
-		if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) {
-			player.render(gc, game, g, Game.getScale());
+		if (true) {
+			
+			GL11.glTranslated(-(camera.offX), -(camera.offY), 0);
+			GameObjects.renderLayer01(gc, game, g, Game.getScale(), player);
+			GameObjects.renderLayer02Before(gc, game, g, Game.getScale(), player);
+			if (player != null && player.getRenderType() != Player.RENDER_TYPE_STATIC) {
+				player.render(gc, game, g, Game.getScale());
+			}
+			GL11.glTranslated((camera.offX), (camera.offY), 0);
 		}
-		g.translate((camera.offX), (camera.offY));
-		
 
 		if (player != null && player.getRenderType() == Player.RENDER_TYPE_STATIC) {
 			player.render(gc, game, g, Game.getScale());
 		}
-		
-		
-		g.translate(-(camera.offX), -(camera.offY));
-		GameObjects.renderLayer02After(gc, game, g, Game.getScale(), player);
-		GameObjects.renderLayer03(gc, game, g, Game.getScale(), player);
-		g.translate((camera.offX), (camera.offY));
-		
+
+		if (true) {
+			GL11.glTranslated(-(camera.offX), -(camera.offY), 0);
+			GameObjects.renderLayer02After(gc, game, g, Game.getScale(), player);
+			GameObjects.renderLayer03(gc, game, g, Game.getScale(), player);
+			GL11.glTranslated((camera.offX), (camera.offY), 0);
+		}
 		overlay.render(gc, g, camera);
 		camera.update(gc, Game.getScale(), player);
-		
+
 	}
-	
 
 	public GameInput getInput() {
 		return input;
 	}
-	
+
 	public GameCam getCamera() {
 		return camera;
 	}

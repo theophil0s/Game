@@ -14,6 +14,7 @@ public class GameResources {
 	private static GameResources res;
 	
 	public static Image player;
+	public static Image tree;
 	public static SpriteSheet sprite;
 	public static SpriteSheet character;
 	public static SpriteSheet colorTiles;
@@ -40,6 +41,7 @@ public class GameResources {
 		try {
 
 			player = new Image("assets/img/t.jpg");
+			tree = new Image("assets/img/tree_256.png");
 			sprite = new SpriteSheet("assets/img/tiles64_terrain.png", 64, 64);
 			character = new SpriteSheet("assets/img/character_sprite2.png", 32, 48);
 			colorTiles = new SpriteSheet("assets/img/colors.png", 64, 64);

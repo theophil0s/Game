@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 
-public class Block extends GameObject implements Renderable{
+public class Block extends GameObject implements IRenderable{
 
 	public static float blockSize;
 
@@ -16,7 +16,7 @@ public class Block extends GameObject implements Renderable{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) {
 		super.init(gc, game);
-		
+		setRenderLayer(GameObject.RENDER_LAYER_1);
 	}
 
 	@Override
@@ -31,11 +31,10 @@ public class Block extends GameObject implements Renderable{
 		
 		if (sprite != null) {
 			sprite.startUse();
-			sprite.getSubImage(spriteX, spriteY).drawEmbedded(getPosXToScreen(), getPosYToScreen(), getWidthToScreen(), getHeightToScreen());
+			sprite.getSubImage(spriteX, spriteY).drawEmbedded(renderX, renderY, renderW, renderH);
 			sprite.endUse();
 		}
 		
-//		g.draw(outline);
 //		g.setFont(GameResources.ttf);
 //		g.drawString(String.valueOf(getId()), getPosXToScreen(), getPosYToScreen());
 //		g.drawString(String.valueOf(getPosXToScreen()), getPosXToScreen(), getPosYToScreen() + 10);

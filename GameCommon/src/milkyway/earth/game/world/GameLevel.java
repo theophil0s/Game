@@ -9,11 +9,12 @@ import milkyway.earth.network.util.GameID;
 import milkyway.earth.object.Block;
 import milkyway.earth.object.GameObject;
 import milkyway.earth.object.GameResources;
+import milkyway.earth.object.Tree;
 
 public class GameLevel {
 
-	int sizeX = 100;
-	int sizeY = 100;
+	int sizeX = 50;
+	int sizeY = 50;
 	
 	private Block block[][];
 
@@ -27,27 +28,19 @@ public class GameLevel {
 
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
-				
 				block[x][y] = new Block();
-				
-				int random = new Random().nextInt(3);
-				
-				block[x][y].setSprite(GameResources.colorTiles, random, 0);
+//				block[x][y].setSprite(GameResources.colorTiles, new Random().nextInt(3), 0);
+				block[x][y].setSprite(GameResources.sprite, 4, 0);
 				block[x][y].setId(GameID.getID());
 				block[x][y].setPosition(
 						(float) (x * block[x][y].getWidth()),
 						(float) (y * block[x][y].getHeight()));
-				
-				if (random == 0) {
-					block[x][y].setRenderLayer(GameObject.RENDER_LAYER_1);
-				} else
-				if (random == 1){
-					block[x][y].setRenderLayer(GameObject.RENDER_LAYER_2);
-				} else
-				if (random == 2){
-					block[x][y].setRenderLayer(GameObject.RENDER_LAYER_3);
-				} 
 			}
+		}
+		
+		for (int i = 0; i < 100; i++) {
+			Tree tree = new Tree(GameID.getID(), new Random().nextInt(2000), new Random().nextInt(2000), GameObject.RENDER_LAYER_2, GameResources.tree);
+			GameObjects.addObject(tree);
 		}
 	}
 
@@ -55,7 +48,8 @@ public class GameLevel {
 		
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
-				
+
+// RENDER VISIBLE OBJECTS _ NOT WORKING YET				
 //				if (
 //						(int)block[x][y].getPosXToScreen() >= (int)camera.offX
 //						&& (int)block[x][y].getPosXToScreen() <= (int)camera.camWidth

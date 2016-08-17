@@ -5,6 +5,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import milkyway.earth.game.states.StatePlay;
+import milkyway.earth.object.GameObject;
 import milkyway.earth.object.Player;
 
 public class GameInput {
@@ -12,67 +13,47 @@ public class GameInput {
 	private Input input;
 	private Player player;
 
-	float x = 0;
-	float y = 0;
+	float x;
+	float y;
 
 	public GameInput(GameContainer gc, int height, Player player) throws SlickException {
 		this.player = player;
 		input = gc.getInput();
+
 	}
 
 	public void update(int delta) {
 
 		x = player.getPosX();
-		y= player.getPosY();
-		
+		y = player.getPosY();
+
 		if (input.isKeyDown(Input.KEY_UP)) {
 			y -= 0.1F * delta;
-			player.setMoveUp(true);
-			player.initPosition(x , y);
-
-		} else
-			player.setMoveUp(false);
-
+			player.setPositionToSend(x, y);
+		}
+		
 		if (input.isKeyDown(Input.KEY_DOWN)) {
 			y += 0.1F * delta;
-			player.setMoveDown(true);
-			player.initPosition(x , y);
-
-		} else
-			player.setMoveDown(false);
-
+			player.setPositionToSend(x, y);
+		}
+		
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			x -= 0.1F * delta;
-			player.setMoveLeft(true);
-			player.initPosition(x , y);
-
-		} else
-			player.setMoveLeft(false);
-
+			player.setPositionToSend(x, y);
+		}
+		
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			x += 0.1F * delta;
-			player.setMoveRight(true);
-			player.initPosition(x , y);
+			player.setPositionToSend(x, y);
+		}
 
-		} else {
-			player.setMoveRight(false);
-		}
-		
-		if ((input.isKeyDown(Input.KEY_UP) 
-			|| input.isKeyDown(Input.KEY_DOWN)
-			|| input.isKeyDown(Input.KEY_LEFT)
-			|| input.isKeyDown(Input.KEY_RIGHT))) {
-			
-					send();
-		}
-		
+		send(player);
+
 	}
-	
-	private void send() {
-		if(StatePlay.gameClient.isRunning()) {
-			StatePlay.gameClient.moveGameObject(player);
-		}
+
+	private void send(GameObject object) {
+		if (StatePlay.gameClient.isRunning())
+			StatePlay.gameClient.moveGameObject(object);
+
 	}
 }
-
-

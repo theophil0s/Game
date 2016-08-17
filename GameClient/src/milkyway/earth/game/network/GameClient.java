@@ -29,7 +29,6 @@ public class GameClient {
 	private String password;
 	// TODO replace
 
-
 	private boolean running = false;
 
 	private String lastError;
@@ -115,7 +114,7 @@ public class GameClient {
 				Player player = new Player();
 				player.setId(addPlayer.getId());
 				player.setName(addPlayer.getName());
-				player.initPosition(addPlayer.getX(), addPlayer.getY());
+				player.setPositionToSend(addPlayer.getX(), addPlayer.getY());
 				// TODO replace
 				player.setImage(GameResources.character.getSubImage(0, 0));
 				GameObjects.addObject(player);
@@ -133,10 +132,12 @@ public class GameClient {
 				UpdatePlayer updatePlayer = (UpdatePlayer) object;
 				// TODO replace
 				for (long l : GameObjects.getObjectList().keySet()) {
-					if (GameObjects.getObjectList().get(l).getId() == updatePlayer.getId()) {
-						GameObjects.getObjectList().get(l).setPosition(updatePlayer.getX(), updatePlayer.getY());
-//						System.out.println(String.format("UpdatePlayer -> ID: %s X: %.2f Y: %.2f", updatePlayer.getId(),
-//								updatePlayer.getX(), updatePlayer.getY()));
+					GameObject currentObject = GameObjects.getObjectList().get(l);
+					if (currentObject != null && currentObject.getId() == updatePlayer.getId()) {
+						currentObject.setPosition(updatePlayer.getX(), updatePlayer.getY());
+						// System.out.println(String.format("UpdatePlayer -> ID:
+						// %s X: %.2f Y: %.2f", updatePlayer.getId(),
+						// updatePlayer.getX(), updatePlayer.getY()));
 						break;
 					}
 				}
@@ -147,8 +148,9 @@ public class GameClient {
 				RemovePlayer removePlayer = (RemovePlayer) object;
 				// TODO replace
 				for (long l : GameObjects.getObjectList().keySet()) {
-					if (GameObjects.getObjectList().get(l).getId() == removePlayer.getId()) {
-						GameObjects.removeObject(GameObjects.getObjectList().get(l));
+					GameObject currentObject = GameObjects.getObjectList().get(l);
+					if (currentObject.getId() == removePlayer.getId()) {
+						GameObjects.removeObject(currentObject);
 						System.out.println(String.format("RemovePlayer -> ID: %s", removePlayer.getId()));
 						break;
 					}
