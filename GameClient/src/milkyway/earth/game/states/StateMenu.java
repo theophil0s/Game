@@ -11,10 +11,13 @@ public class StateMenu extends BasicGameState {
 
 	float x, y, w, h;
 	Rectangle shape;
-	
+
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-		x = 100F; y = 100F; w = 100F; h = 100F;
+		x = 100F;
+		y = 100F;
+		w = 100F;
+		h = 100F;
 		shape = new Rectangle(x, y, w, h);
 
 	}
@@ -29,7 +32,7 @@ public class StateMenu extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 
 		g.drawString("MENU", 400, 400);
-//		g.draw(shape);
+		// g.draw(shape);
 	}
 
 	@Override

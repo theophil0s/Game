@@ -24,7 +24,7 @@ public class Game extends StateBasedGame {
 	private static final Boolean ALWAYS_RENDER = true;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	private static final double[] scaleSteps = {0.1 , 0.2 , 0.4 , 0.6 , 0.8 , 1 , 1.2 , 1.4, 1.6 , 1.8 , 2 , 2.4};
+	private static final double[] scaleSteps = { 0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.4 };
 
 	private static int scaleStep = 5;
 	private static double scale;
@@ -32,7 +32,7 @@ public class Game extends StateBasedGame {
 	private static Dimension resolution;
 	private static AppGameContainer container;
 	private static Game game;
-	
+
 	private static StatePlay statePlay;
 
 	public Game(String title) throws SlickException {
@@ -45,12 +45,11 @@ public class Game extends StateBasedGame {
 		statePlay = new StatePlay();
 
 		start(game);
-		
+
 	}
 
 	public static void start(Game game) throws SlickException {
 
-		
 		resolution = new Dimension(WIDTH, HEIGHT);
 		container = new AppGameContainer(game);
 
@@ -104,7 +103,7 @@ public class Game extends StateBasedGame {
 	public static float getZoom() {
 		return (float) scale;
 	}
-	
+
 	public static void setScale(double scale) {
 		Game.scale = (float) scale;
 	}
@@ -115,31 +114,31 @@ public class Game extends StateBasedGame {
 
 	@Override
 	public void mouseWheelMoved(int change) {
-		
 
-		if (change > 0 && scaleStep < scaleSteps.length -1) {
-			
+		if (change > 0 && scaleStep < scaleSteps.length - 1) {
+
 			enterState(0);
 			scaleStep++;
-			
-		} else if (change > 0 && scaleStep == scaleSteps.length -1) {
-			
+
+		} else if (change > 0 && scaleStep == scaleSteps.length - 1) {
+
 			enterState(2);
 			scaleStep++;
-		
+
 		} else if (change < 0 && scaleStep > 0) {
-			
+
 			enterState(0);
 			scaleStep--;
-			
-		} else if (change < 0 && scaleStep == 0){
-			 
+
+		} else if (change < 0 && scaleStep == 0) {
+
 			enterState(1);
 			scaleStep--;
 		}
-		
-		if (scaleStep >= 0 && scaleStep < scaleSteps.length) setScale(scaleSteps[scaleStep]);
-			
+
+		if (scaleStep >= 0 && scaleStep < scaleSteps.length)
+			setScale(scaleSteps[scaleStep]);
+
 	}
 
 	@Override

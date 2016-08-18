@@ -11,6 +11,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import milkyway.earth.object.Block;
 import milkyway.earth.object.GameObject;
 
 public class GameObjects {
@@ -27,7 +28,7 @@ public class GameObjects {
 	private static StateBasedGame game;
 
 	private GameObjects() {
-		
+
 		objects = new ConcurrentHashMap<Long, GameObject>();
 		layer01 = new HashMap<Long, GameObject>();
 		layer02Before = new HashMap<Long, GameObject>();
@@ -58,7 +59,7 @@ public class GameObjects {
 	public static int getLayer02AfterSize() {
 		return layer02After.size();
 	}
-	
+
 	public static int getLayer03Size() {
 		return layer03.size();
 	}
@@ -86,16 +87,16 @@ public class GameObjects {
 		} else
 
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_2) {
-			
+
 			if (layer02Before.containsKey(object.getId())) {
 				layer02Before.remove(object.getId());
-			
-			} else 
-			
+
+			} else
+
 			if (layer02After.containsKey(object.getId())) {
 				layer02After.remove(object.getId());
-			}	
-			
+			}
+
 		} else
 
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_3) {
@@ -113,30 +114,43 @@ public class GameObjects {
 		for (long l : objects.keySet()) {
 			GameObject currentObject = objects.get(l);
 			currentObject.update(gc, game, delta);
+			sortObjectsToRender(currentObject, object);
 
-			if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_1) {
-				layer01.put(currentObject.getId(), currentObject);
-			} else
-
-			if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_2) {
+			if (!(currentObject instanceof Block)) {
+				currentObject.getPosTile()[0] = (int) ((currentObject.getPosX() + currentObject.getWidth() / 2) / Block.BLOCK_SIZE);
+				currentObject.getPosTile()[1] = (int) ((currentObject.getPosY() + currentObject.getHeight() / 2) / Block.BLOCK_SIZE);
 				
-				if (object != null && currentObject.getPosY() + currentObject.getHeight() < object.getPosY() + object.getHeight()) {
-					layer02After.remove(currentObject.getId(), currentObject);
-					layer02Before.put(currentObject.getId(), currentObject);
-				} else {
-					layer02Before.remove(currentObject.getId(), currentObject);
-					layer02After.put(currentObject.getId(), currentObject);
-				}
-			
-			} else
-
-			if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_3) {
-				layer03.put(currentObject.getId(), currentObject);
+				// TODO set block information
 			}
 		}
 	}
 
-	public static void renderLayer01(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
+	private void sortObjectsToRender(GameObject currentObject, GameObject object) {
+		if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_1) {
+			layer01.put(currentObject.getId(), currentObject);
+		} else
+
+		if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_2) {
+
+			if (object != null
+					&& currentObject.getPosY() + currentObject.getHeight() < object.getPosY() + object.getHeight()) {
+
+				layer02After.remove(currentObject.getId(), currentObject);
+				layer02Before.put(currentObject.getId(), currentObject);
+			} else {
+				layer02Before.remove(currentObject.getId(), currentObject);
+				layer02After.put(currentObject.getId(), currentObject);
+			}
+
+		} else
+
+		if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_3) {
+			layer03.put(currentObject.getId(), currentObject);
+		}
+	}
+
+	public static void renderLayer01(GameContainer gc, StateBasedGame game, Graphics g, float scale,
+			GameObject object) {
 
 		for (long l : layer01.keySet()) {
 			GameObject currentObject = objects.get(l);
@@ -144,40 +158,43 @@ public class GameObjects {
 		}
 	}
 
-	public static void renderLayer02Before(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
-		
-		List<GameObject> list = new ArrayList<GameObject>(layer02Before.values());
-	    Collections.sort(list, new Comparator<GameObject>() {
-	        public int compare(GameObject o1, GameObject o2) {
-	            return (int) ((o1.getPosY() + o1.getHeight()) - (o2.getPosY() + o2.getHeight()));
-	        }
-	    });
+	public static void renderLayer02Before(GameContainer gc, StateBasedGame game, Graphics g, float scale,
+			GameObject object) {
 
-	    for (GameObject go : list) {
-	    	if (go != object) {
-	    		go.render(gc, game, g, scale);
-	    	}
-	    }
+		List<GameObject> list = new ArrayList<GameObject>(layer02Before.values());
+		Collections.sort(list, new Comparator<GameObject>() {
+			public int compare(GameObject o1, GameObject o2) {
+				return (int) ((o1.getPosY() + o1.getHeight()) - (o2.getPosY() + o2.getHeight()));
+			}
+		});
+
+		for (GameObject go : list) {
+			if (go != object) {
+				go.render(gc, game, g, scale);
+			}
+		}
 	}
 
-	public static void renderLayer02After(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
+	public static void renderLayer02After(GameContainer gc, StateBasedGame game, Graphics g, float scale,
+			GameObject object) {
 
 		List<GameObject> list = new ArrayList<GameObject>(layer02After.values());
-	    Collections.sort(list, new Comparator<GameObject>() {
-	        public int compare(GameObject o1, GameObject o2) {
-	            return (int) ((o1.getPosY() + o1.getHeight()) - (o2.getPosY() + o2.getHeight()));
-	        }
-	    });
+		Collections.sort(list, new Comparator<GameObject>() {
+			public int compare(GameObject o1, GameObject o2) {
+				return (int) ((o1.getPosY() + o1.getHeight()) - (o2.getPosY() + o2.getHeight()));
+			}
+		});
 
-	    for (GameObject go : list) {
-	    	if (go != object) {
-	    		go.render(gc, game, g, scale);
-	    	}
-	    }
+		for (GameObject go : list) {
+			if (go != object) {
+				go.render(gc, game, g, scale);
+			}
+		}
 	}
 
-	public static void renderLayer03(GameContainer gc, StateBasedGame game, Graphics g, float scale, GameObject object) {
-		
+	public static void renderLayer03(GameContainer gc, StateBasedGame game, Graphics g, float scale,
+			GameObject object) {
+
 		for (long l : layer03.keySet()) {
 			GameObject currentObject = objects.get(l);
 			currentObject.render(gc, game, g, scale);

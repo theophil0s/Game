@@ -24,6 +24,8 @@ import milkyway.earth.object.Player;
 
 public class StatePlay extends BasicGameState {
 
+	private boolean connected;
+
 	private String playerName;
 	public static GameClient gameClient;
 
@@ -53,19 +55,22 @@ public class StatePlay extends BasicGameState {
 		level.init(gc);
 		overlay.init(gc);
 
-		playerName = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to server",
-				JOptionPane.QUESTION_MESSAGE, null, null,
-				"Player_" + new Random(System.currentTimeMillis()).nextInt(999999));
+		if (!connected) {
+			playerName = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to server",
+					JOptionPane.QUESTION_MESSAGE, null, null,
+					"Player_" + new Random(System.currentTimeMillis()).nextInt(999999));
 
-		String host = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to server",
-				JOptionPane.QUESTION_MESSAGE, null, null, "localhost");
+			String host = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to server",
+					JOptionPane.QUESTION_MESSAGE, null, null, "localhost");
 
-		gameClient = new GameClient(playerName, host, 13001, null, objects);
+			gameClient = new GameClient(playerName, host, 13001, null, objects);
 
-		try {
-			gameClient.start();
-		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				gameClient.start();
+				connected = true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -93,12 +98,12 @@ public class StatePlay extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-		
+
 		GL11.glEnable(GL11.GL_BLEND);
-       	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-       	
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
 		if (true) {
-			
+
 			GL11.glTranslated(-(camera.offX), -(camera.offY), 0);
 			GameObjects.renderLayer01(gc, game, g, Game.getScale(), player);
 			GameObjects.renderLayer02Before(gc, game, g, Game.getScale(), player);

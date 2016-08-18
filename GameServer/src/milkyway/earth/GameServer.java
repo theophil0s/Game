@@ -27,7 +27,7 @@ public class GameServer {
 	private Server server;
 
 	// TODO replace with correct logic
-	//	private int playerId = 0;
+	// private int playerId = 0;
 
 	private int port;
 	private String name;

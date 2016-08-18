@@ -5,13 +5,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Tree extends GameObject implements IRenderable{
+public class Tree extends GameObject {
 
 	public Tree() {
 
-		
 	}
-	
+
 	public Tree(long id, float posX, float posY, int renderLayer, Image image) {
 		super(id, posX, posY, renderLayer, image);
 	}
@@ -19,27 +18,27 @@ public class Tree extends GameObject implements IRenderable{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) {
 		super.init(gc, game);
-		
+
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 		super.update(gc, game, delta);
-		
+
 	}
-	
+
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
-		
+
 		if (image != null) {
 			image.startUse();
 			image.drawEmbedded(renderX, renderY, renderW, renderH);
 			image.endUse();
 		}
-		
-//		ShapeRenderer.draw(outline);
-//		g.draw(outline);
-		
+
+		// ShapeRenderer.draw(outline);
+		// g.draw(outline);
+
 	}
 }

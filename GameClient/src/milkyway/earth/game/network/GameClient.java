@@ -110,15 +110,16 @@ public class GameClient {
 			}
 
 			if (object instanceof AddPlayer) {
+				
 				AddPlayer addPlayer = (AddPlayer) object;
-				Player player = new Player();
+
+				Player player = new Player(addPlayer.getX(), addPlayer.getY(),
+						GameResources.character.getSubImage(0, 0));
+				
 				player.setId(addPlayer.getId());
 				player.setName(addPlayer.getName());
-				player.setPositionToSend(addPlayer.getX(), addPlayer.getY());
-				// TODO replace
-				player.setImage(GameResources.character.getSubImage(0, 0));
 				GameObjects.addObject(player);
-
+				
 				// TODO replace
 				if (playerName.equals(addPlayer.getName())) {
 					GameObjects.setPlayerId(addPlayer.getId());

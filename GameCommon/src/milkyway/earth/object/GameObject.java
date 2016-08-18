@@ -18,10 +18,11 @@ public abstract class GameObject {
 	public static final int RENDER_LAYER_3 = 3;
 
 	private long id;
-	protected String  name;
+	protected String name;
 	protected int viewDistance;
 	protected int renderType;
 	protected int renderLayer;
+	protected int posTile[];
 	protected float scale;
 	protected float posX;
 	protected float posY;
@@ -51,10 +52,22 @@ public abstract class GameObject {
 	public GameObject() {
 	}
 
+	public GameObject(float posX, float posY, Image image) {
+		this.posXToSend = posX;
+		this.posYToSend = posY;
+		this.posX = posX;
+		this.posY = posY;
+		this.image = image;
+		this.width = image.getWidth();
+		this.height = image.getHeight();
+	}
+
 	public GameObject(long id, float posX, float posY, int renderLayer) {
 		this.id = id;
 		this.posX = posX;
 		this.posY = posY;
+		this.posXToSend = posX;
+		this.posYToSend = posY;
 		this.renderLayer = renderLayer;
 	}
 
@@ -62,6 +75,8 @@ public abstract class GameObject {
 		this.id = id;
 		this.posX = posX;
 		this.posY = posY;
+		this.posXToSend = posX;
+		this.posYToSend = posY;
 		this.renderLayer = renderLayer;
 		this.image = image;
 		this.width = image.getWidth();
@@ -72,6 +87,8 @@ public abstract class GameObject {
 		this.id = id;
 		this.posX = posX;
 		this.posY = posY;
+		this.posXToSend = posX;
+		this.posYToSend = posY;
 		this.renderLayer = renderLayer;
 		this.animation = animation;
 		this.width = animation.getWidth();
@@ -80,11 +97,13 @@ public abstract class GameObject {
 
 	public void init(GameContainer gc, StateBasedGame game) {
 
+		posTile = new int[2];
 		outline = new Rectangle(0, 0, 0, 0);
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 
+		// Set Pos & Dimension
 		if (renderType == Player.RENDER_TYPE_STATIC) {
 			renderX = gc.getWidth() / 2 - getWidthToScreen() / 2;
 			renderY = gc.getHeight() / 2 - getHeightToScreen() / 2;
@@ -97,6 +116,7 @@ public abstract class GameObject {
 			renderH = getHeightToScreen();
 		}
 
+		// Set Outline
 		((Rectangle) outline).setBounds(renderX, renderY, renderW, renderH);
 	}
 
@@ -157,7 +177,7 @@ public abstract class GameObject {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public float getScale() {
 		return scale;
 	}
@@ -325,5 +345,13 @@ public abstract class GameObject {
 
 	public void setMoveRight(Boolean moveRight) {
 		this.moveRight = moveRight;
+	}
+
+	public int[] getPosTile() {
+		return posTile;
+	}
+
+	public void setPosTile(int[] posTile) {
+		this.posTile = posTile;
 	}
 }

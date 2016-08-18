@@ -31,17 +31,17 @@ public class GameInput {
 			y -= 0.1F * delta;
 			player.setPositionToSend(x, y);
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_DOWN)) {
 			y += 0.1F * delta;
 			player.setPositionToSend(x, y);
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			x -= 0.1F * delta;
 			player.setPositionToSend(x, y);
 		}
-		
+
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			x += 0.1F * delta;
 			player.setPositionToSend(x, y);
