@@ -11,6 +11,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import milkyway.earth.game.world.GameLevel;
 import milkyway.earth.object.Block;
 import milkyway.earth.object.GameObject;
 
@@ -113,15 +114,19 @@ public class GameObjects {
 
 		for (long l : objects.keySet()) {
 			GameObject currentObject = objects.get(l);
-			currentObject.update(gc, game, delta);
-			sortObjectsToRender(currentObject, object);
 
 			if (!(currentObject instanceof Block)) {
+				
 				currentObject.getPosTile()[0] = (int) ((currentObject.getPosX() + currentObject.getWidth() / 2) / Block.BLOCK_SIZE);
 				currentObject.getPosTile()[1] = (int) ((currentObject.getPosY() + currentObject.getHeight() / 2) / Block.BLOCK_SIZE);
 				
+				GameLevel.block[currentObject.getPosTile()[0]][currentObject.getPosTile()[1]].addObject(currentObject);
+				
 				// TODO set block information
 			}
+
+			currentObject.update(gc, game, delta);
+			sortObjectsToRender(currentObject, object);
 		}
 	}
 

@@ -14,7 +14,7 @@ public class GameLevel {
 	int sizeX = 50;
 	int sizeY = 50;
 
-	private Block block[][];
+	public static Block block[][];
 
 	public GameLevel() {
 
@@ -34,12 +34,12 @@ public class GameLevel {
 			}
 		}
 
-		Tree tree = new Tree(GameID.getID(), 200, 400, GameObject.RENDER_LAYER_2, GameResources.tree);
-		GameObjects.addObject(tree);
-		tree = new Tree(GameID.getID(), 700, 500, GameObject.RENDER_LAYER_2, GameResources.tree);
-		GameObjects.addObject(tree);
-		tree = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
-		GameObjects.addObject(tree);
+//		Tree tree = new Tree(GameID.getID(), 200, 400, GameObject.RENDER_LAYER_2, GameResources.tree);
+//		GameObjects.addObject(tree);
+//		tree = new Tree(GameID.getID(), 700, 500, GameObject.RENDER_LAYER_2, GameResources.tree);
+//		GameObjects.addObject(tree);
+//		tree = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
+//		GameObjects.addObject(tree);
 	}
 
 	public void update(GameContainer gc, int delta, GameObject object, GameCam camera) {
