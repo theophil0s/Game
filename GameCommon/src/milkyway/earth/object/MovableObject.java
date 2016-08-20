@@ -3,24 +3,21 @@ package milkyway.earth.object;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.ShapeRenderer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Character extends GameObject {
+public class MovableObject extends GameObject {
 
 	private int tempCounter;
 	
-	public Character() {}
+	public MovableObject() {}
 	
-	public Character(float posX, float posY, Image image) {
+	public MovableObject(float posX, float posY, Image image) {
 		super(posX, posY, image);
 	}
 
 	public void init(GameContainer gc, StateBasedGame game) {
 		super.init(gc, game);
-
-		hitbox = new Circle(0, 0, 0);
 	}
 
 	@Override
@@ -137,8 +134,8 @@ public class Character extends GameObject {
 			image.draw(renderX, renderY, renderW, renderH, null);
 
 		}
-
+		
 		ShapeRenderer.draw(outline);
-		g.draw(hitbox);
+		ShapeRenderer.draw(hitbox);
 	}
 }

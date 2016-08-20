@@ -10,6 +10,8 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
+import milkyway.earth.game.world.GameCam;
+
 public abstract class GameObject {
 
 	public static final int RENDER_TYPE_STATIC = 1;
@@ -17,6 +19,8 @@ public abstract class GameObject {
 	public static final int RENDER_LAYER_2 = 2;
 	public static final int RENDER_LAYER_3 = 3;
 
+	public boolean colliding;
+	
 	private long id;
 	protected String name;
 	protected int viewDistance;
@@ -103,21 +107,12 @@ public abstract class GameObject {
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 
-		// Set Pos & Dimension
-		if (renderType == Player.RENDER_TYPE_STATIC) {
-			renderX = gc.getWidth() / 2 - getWidthToScreen() / 2;
-			renderY = gc.getHeight() / 2 - getHeightToScreen() / 2;
-			renderW = getWidthToScreen();
-			renderH = getHeightToScreen();
-		} else {
-			renderX = getPosXToScreen();
-			renderY = getPosYToScreen();
-			renderW = getWidthToScreen();
-			renderH = getHeightToScreen();
-		}
+		renderX = getPosXToScreen() -(GameCam.offX);
+		renderY = getPosYToScreen() -(GameCam.offY);
+		renderW = getWidthToScreen();
+		renderH = getHeightToScreen();
 
-		// Set Outline
-		((Rectangle) outline).setBounds(renderX, renderY, renderW, renderH);
+		((Rectangle) outline).setBounds(renderX , renderY, renderW, renderH);
 	}
 
 	public abstract void render(GameContainer gc, StateBasedGame game, Graphics g, float scale);

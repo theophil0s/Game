@@ -152,6 +152,7 @@ public class GameClient {
 					GameObject currentObject = GameObjects.getObjectList().get(l);
 					if (currentObject.getId() == removePlayer.getId()) {
 						GameObjects.removeObject(currentObject);
+						currentObject.setId( -1);
 						System.out.println(String.format("RemovePlayer -> ID: %s", removePlayer.getId()));
 						break;
 					}

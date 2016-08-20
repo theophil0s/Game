@@ -24,7 +24,7 @@ public class Game extends StateBasedGame {
 	private static final Boolean ALWAYS_RENDER = true;
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	private static final double[] scaleSteps = { 0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.4 };
+	private static final double[] scaleSteps = {0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.4 };
 
 	private static int scaleStep = 5;
 	private static double scale;

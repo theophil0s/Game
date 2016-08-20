@@ -11,8 +11,8 @@ import milkyway.earth.object.Tree;
 
 public class GameLevel {
 
-	int sizeX = 50;
-	int sizeY = 50;
+	int sizeX = 20;
+	int sizeY = 20;
 
 	public static Block block[][];
 
@@ -27,23 +27,23 @@ public class GameLevel {
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
 				block[x][y] = new Block(x, y);
-				block[x][y].setSprite(GameResources.sprite, 4, 0);
+				block[x][y].setSprite(GameResources.sprite, 5, 0);
 				block[x][y].setId(GameID.getID());
 				block[x][y].setRenderLayer(GameObject.RENDER_LAYER_1);
 				block[x][y].setPosition((float) (x * block[x][y].getWidth()), (float) (y * block[x][y].getHeight()));
 			}
 		}
 
-//		Tree tree = new Tree(GameID.getID(), 200, 400, GameObject.RENDER_LAYER_2, GameResources.tree);
-//		GameObjects.addObject(tree);
-//		tree = new Tree(GameID.getID(), 700, 500, GameObject.RENDER_LAYER_2, GameResources.tree);
-//		GameObjects.addObject(tree);
-//		tree = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
-//		GameObjects.addObject(tree);
+		Tree tree1 = new Tree(GameID.getID(), 200, 400, GameObject.RENDER_LAYER_2, GameResources.tree);
+		GameObjects.addObject(tree1);
+		Tree tree2 = new Tree(GameID.getID(), 700, 500, GameObject.RENDER_LAYER_2, GameResources.tree);
+		GameObjects.addObject(tree2);
+		Tree tree3 = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
+		GameObjects.addObject(tree3);
 	}
 
-	public void update(GameContainer gc, int delta, GameObject object, GameCam camera) {
-
+	public void update(GameContainer gc, int delta, GameObject object) {
+		
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
 

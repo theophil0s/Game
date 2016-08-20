@@ -84,20 +84,11 @@ public class GameObjects {
 
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_1) {
 			layer01.remove(object.getId());
-
 		} else
 
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_2) {
-
-			if (layer02Before.containsKey(object.getId())) {
-				layer02Before.remove(object.getId());
-
-			} else
-
-			if (layer02After.containsKey(object.getId())) {
-				layer02After.remove(object.getId());
-			}
-
+			layer02Before.remove(object.getId());
+			layer02After.remove(object.getId());
 		} else
 
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_3) {
@@ -110,23 +101,49 @@ public class GameObjects {
 		GameObjects.game = game;
 	}
 
+
 	public void update(GameContainer gc, StateBasedGame game, int delta, GameObject object) {
 
 		for (long l : objects.keySet()) {
 			GameObject currentObject = objects.get(l);
-
-			if (!(currentObject instanceof Block)) {
-				
-				currentObject.getPosTile()[0] = (int) ((currentObject.getPosX() + currentObject.getWidth() / 2) / Block.BLOCK_SIZE);
-				currentObject.getPosTile()[1] = (int) ((currentObject.getPosY() + currentObject.getHeight() / 2) / Block.BLOCK_SIZE);
-				
-				GameLevel.block[currentObject.getPosTile()[0]][currentObject.getPosTile()[1]].addObject(currentObject);
-				
-				// TODO set block information
-			}
-
 			currentObject.update(gc, game, delta);
+			sortObjectsForCollision(currentObject);
 			sortObjectsToRender(currentObject, object);
+		}
+	}
+
+	private void sortObjectsForCollision(GameObject object) {
+
+		if (!(object instanceof Block)) {
+			int[] posTile = { (int) ((object.getPosX() + object.getWidth() / 2) / Block.BLOCK_SIZE),
+					(int) ((object.getPosY() + object.getHeight() / 2) / Block.BLOCK_SIZE) };
+			
+			if (!(posTile[0] == object.getPosTile()[0] && posTile[1] == object.getPosTile()[1])) {
+				
+				int range = 1;
+				
+				for (int i = -range; i <= range; i++) {
+					for (int j = -range; j <= range; j++) {
+						int a = (object.getPosTile()[0] + i);
+						int b = (object.getPosTile()[1] + j);
+						if (a >= 0 && b >= 0) {
+							GameLevel.block[a][b].removeObject(object);
+						}
+					}
+				}
+
+				object.setPosTile(posTile);
+				
+				for (int i = -range; i <= range; i++) {
+					for (int j = -range; j <= range; j++) {
+						int a = (object.getPosTile()[0] + i);
+						int b = (object.getPosTile()[1] + j);
+						if (a >= 0 && b >= 0) {
+							GameLevel.block[a][b].addObject(object);
+						}
+					}
+				}
+			}
 		}
 	}
 
