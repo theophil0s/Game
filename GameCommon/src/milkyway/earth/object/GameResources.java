@@ -17,6 +17,7 @@ public class GameResources {
 	public static SpriteSheet sprite;
 	public static SpriteSheet character;
 	public static SpriteSheet colorTiles;
+	public static SpriteSheet chest;
 
 	private static Image[] down;
 	private static Image[] up;
@@ -44,6 +45,7 @@ public class GameResources {
 			sprite = new SpriteSheet("assets/img/tiles64_terrain.png", 64, 64);
 			character = new SpriteSheet("assets/img/character_sprite2.png", 32, 48);
 			colorTiles = new SpriteSheet("assets/img/colors.png", 64, 64);
+			chest = new SpriteSheet("assets/img/chest.png", 64, 50);
 
 		} catch (SlickException e) {
 

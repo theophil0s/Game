@@ -35,6 +35,10 @@ public class GameCam {
 		return mX;
 	}
 
+	public static float getmY() {
+		return mY;
+	}
+	
 	public static void setmX(float mX) {
 		GameCam.mX = mX;
 	}

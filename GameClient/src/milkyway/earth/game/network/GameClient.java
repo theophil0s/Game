@@ -113,11 +113,10 @@ public class GameClient {
 				
 				AddPlayer addPlayer = (AddPlayer) object;
 
-				Player player = new Player(addPlayer.getX(), addPlayer.getY(),
+				Player player = new Player(addPlayer.getId(), addPlayer.getX(), addPlayer.getY(),
 						GameResources.character.getSubImage(0, 0));
-				
-				player.setId(addPlayer.getId());
 				player.setName(addPlayer.getName());
+				
 				GameObjects.addObject(player);
 				
 				// TODO replace

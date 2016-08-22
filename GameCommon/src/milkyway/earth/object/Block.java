@@ -38,15 +38,10 @@ public class Block extends GameObject {
 				
 			} else {
 
-				for (long l2 : objects.keySet()) {
-					if (objects.get(l) != objects.get(l2)) {
-						
-						if (objects.get(l2).getHitbox().intersects(objects.get(l).getHitbox())) {
-							
-							System.out.println("COL");
-							
-							objects.get(l).colliding = true;
-							objects.get(l2).colliding = true;
+				if (objects.get(l) instanceof MovableObject) {
+					for (long l2 : objects.keySet()) {
+						if (objects.get(l) != objects.get(l2)) {
+							((MovableObject) objects.get(l)).addObject(objects.get(l2));
 						}
 					}
 				}
@@ -71,6 +66,8 @@ public class Block extends GameObject {
 //			RenderEffect.renderAsGhost(sprite.getSubImage(spriteX, spriteY), animation, renderX, renderY, renderW,
 //					renderH, 0.043F, 0.012F, 1.000F, 1.000F);
 //		}
+		
+//		g.drawString(String.valueOf(objects.size()), renderX + 1, renderY + 1);
 	}
 
 	public void addObject(GameObject object) {
@@ -81,6 +78,15 @@ public class Block extends GameObject {
 
 	public void removeObject(GameObject object) {
 		if (objects.contains(object)) {
+			for (long l : objects.keySet()) {
+				if (objects.get(l) instanceof MovableObject) {
+					MovableObject mo = (MovableObject) objects.get(l);
+					for (long l2 : objects.keySet()) {
+						mo.removeObject(objects.get(l2));
+					}
+				}
+			}
+			
 			objects.remove(object.getId());
 		}
 	}
@@ -91,5 +97,11 @@ public class Block extends GameObject {
 
 	public void setPosTile(int[] posTile) {
 		this.posTile = posTile;
+	}
+
+	@Override
+	public void isCollidingWith(GameObject object) {
+		// TODO Auto-generated method stub
+		
 	}
 }

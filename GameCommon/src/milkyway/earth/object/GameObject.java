@@ -20,6 +20,7 @@ public abstract class GameObject {
 	public static final int RENDER_LAYER_3 = 3;
 
 	public boolean colliding;
+	public boolean selected;
 	
 	private long id;
 	protected String name;
@@ -53,10 +54,10 @@ public abstract class GameObject {
 	protected Boolean moveLeft = false;
 	protected Boolean moveRight = false;
 
-	public GameObject() {
-	}
+	public GameObject() { }
 
-	public GameObject(float posX, float posY, Image image) {
+	public GameObject(long id, float posX, float posY, Image image) {
+		this.id = id;
 		this.posXToSend = posX;
 		this.posYToSend = posY;
 		this.posX = posX;
@@ -117,6 +118,8 @@ public abstract class GameObject {
 
 	public abstract void render(GameContainer gc, StateBasedGame game, Graphics g, float scale);
 
+	public abstract void isCollidingWith(GameObject object);
+	
 	public float getPosXToScreen() {
 		return posX * scale;
 	}
@@ -256,7 +259,7 @@ public abstract class GameObject {
 		return hitbox;
 	}
 
-	public void setHitbox(Shape hitbox) {
+	public void setHitbox(Rectangle hitbox) {
 		this.hitbox = hitbox;
 	}
 
@@ -348,5 +351,21 @@ public abstract class GameObject {
 
 	public void setPosTile(int[] posTile) {
 		this.posTile = posTile;
+	}
+
+	public boolean isColliding() {
+		return colliding;
+	}
+
+	public void setColliding(boolean colliding) {
+		this.colliding = colliding;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

@@ -40,6 +40,10 @@ public class GameLevel {
 		GameObjects.addObject(tree2);
 		Tree tree3 = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
 		GameObjects.addObject(tree3);
+		
+//		Chest chest = new Chest(GameID.getID(), 500, 500, GameObject.RENDER_LAYER_2, GameResources.chest.getSprite(0, 0));
+//		GameObjects.addObject(chest);
+		
 	}
 
 	public void update(GameContainer gc, int delta, GameObject object) {

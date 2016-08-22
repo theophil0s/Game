@@ -125,6 +125,7 @@ public class GameServer {
 
 				// TODO player init
 				Player player = new Player();
+				// no Image , no Dimensions
 				player.setName(name);
 				player.setId(GameID.getID() - 1000000000000L);
 				player.setPosition(600, 600);
