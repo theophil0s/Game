@@ -22,7 +22,6 @@ public class Player extends MovableObject {
 		super.init(gc, game);
 		
 		hitbox = new Rectangle(0, 0, 0, 0);
-
 		renderLayer = GameObject.RENDER_LAYER_2;
 		viewDistance = 1000;
 	}
@@ -37,13 +36,6 @@ public class Player extends MovableObject {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
-		
-		if (selected) {
-			RenderEffect.renderAsGhost(image, animation, renderX, renderY, renderW, renderH, 0, 1, 0, 0.5F);
-			ShapeRenderer.draw(outline);
-			ShapeRenderer.draw(hitbox);
-		} else
-			
 		super.render(gc, game, g, scale);
 	}
 }

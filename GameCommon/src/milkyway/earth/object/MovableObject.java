@@ -6,11 +6,17 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.ShapeRenderer;
 import org.newdawn.slick.state.StateBasedGame;
 
+import milkyway.earth.game.effects.RenderEffect;
+import milkyway.earth.game.interfaces.ICollidable;
+import milkyway.earth.game.interfaces.IRenderable;
+import milkyway.earth.game.interfaces.ISelectable;
+import milkyway.earth.game.interfaces.IUpdatable;
 import milkyway.earth.game.world.GameCam;
 
-public class MovableObject extends GameObject {
+public class MovableObject extends GameObject implements ICollidable, ISelectable, IUpdatable, IRenderable{
 
 	private int tempCounter;
 	private ConcurrentHashMap<Long, GameObject> objects;
@@ -22,16 +28,11 @@ public class MovableObject extends GameObject {
 		objects = new ConcurrentHashMap<>();
 	}
 
-	public void init(GameContainer gc, StateBasedGame game) {
-		super.init(gc, game);
-	}
-
+	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 		super.update(gc, game, delta);
-		
-		if (outline.contains(GameCam.mX , GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			selected = !selected;
-		}
+
+		checkSelection(gc);
 		
 		if (moveRight) {
 			animation = GameResources.animationRight;
@@ -61,18 +62,23 @@ public class MovableObject extends GameObject {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 
+		
+		if (selected) {
+			RenderEffect.renderAsGhost(image, animation, renderX, renderY, renderW, renderH, 1, 1, 1, 1);
+		} else
+		// TODO ADD DRAW EMBEDDED
 		if (animation != null) {
 
 			animation.draw(renderX, renderY, renderW, renderH, null);
 
-		} else if (image != null) {
-
+		} else 
+		
+		if (image != null) {
 			image.draw(renderX, renderY, renderW, renderH, null);
-
 		}
 
-//		ShapeRenderer.draw(outline);
-//		ShapeRenderer.draw(hitbox);
+		ShapeRenderer.draw(outline);
+		ShapeRenderer.draw(hitbox);
 	}
 
 	@Override
@@ -159,7 +165,9 @@ public class MovableObject extends GameObject {
 			for (long l : objects.keySet()) {
 				GameObject currentObject = objects.get(l);
 				if (currentObject.getHitbox() != null && currentObject.getHitbox().intersects(hitbox)) {
-					currentObject.isCollidingWith(this);
+					
+					((ICollidable) currentObject).isCollidingWith(this);
+					
 					if (currentObject.getHitbox().getCenterX() < hitbox.getCenterX()) {
 						return -1F; // TODO Add Speed and delta
 					} else {
@@ -178,7 +186,7 @@ public class MovableObject extends GameObject {
 				GameObject currentObject = objects.get(l);
 				if (currentObject.getHitbox().intersects(hitbox)) {
 					
-					currentObject.isCollidingWith(this);
+					((ICollidable) currentObject).isCollidingWith(this);
 					
 					if (currentObject.getHitbox().getCenterY() < hitbox.getCenterY()) {
 						return - 1F; // TODO Add Speed and delta
@@ -210,7 +218,15 @@ public class MovableObject extends GameObject {
 
 	@Override
 	public void isCollidingWith(GameObject object) {
-		// TODO Auto-generated method stub
+		colliding = true;
+		System.out.println(object);
+	}
+
+	@Override
+	public void checkSelection(GameContainer gc) {
 		
+		if (outline.contains(GameCam.mX , GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			selected = !selected;
+		}
 	}
 }

@@ -9,14 +9,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import milkyway.earth.game.world.GameCam;
 
-public class Chest extends GameObject {
+public class Chest extends Fixture {
 
 	private boolean open;
 	
 	public Chest() {	}
 
-	public Chest(long id, float posX, float posY, int renderLayer, Image image) {
-		super(id, posX, posY, renderLayer, image);
+	public Chest(long id, int renderLayer, Image image, float fixOffSetX, float fixOffSetY) {
+		super(id, renderLayer, image, fixOffSetX, fixOffSetY);
 	}
 
 	@Override
@@ -33,19 +33,12 @@ public class Chest extends GameObject {
 
 		((Rectangle) hitbox).setBounds(renderX + renderW / 4 , renderY + renderH / 3, renderW / 2, renderH / 2);
 		
-		if (outline.contains(GameCam.mX , GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			selected = !selected;
-			// MOUSE IN SHAPE HERE
-		}
-		
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 
-		System.out.println(image);
-		
 		if (image != null) {	
 			image.startUse();
 			image.drawEmbedded(renderX, renderY, renderW, renderH);
@@ -68,6 +61,14 @@ public class Chest extends GameObject {
 		if (selected) {
 			image = GameResources.chest.getSprite(0, 0);
 			open = false;
+		}
+	}
+
+	@Override
+	public void checkSelection(GameContainer gc) {
+		
+		if (outline.contains(GameCam.mX , GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			selected = !selected;
 		}
 	}
 }

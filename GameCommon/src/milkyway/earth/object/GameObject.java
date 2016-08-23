@@ -2,7 +2,6 @@ package milkyway.earth.object;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
@@ -40,8 +39,8 @@ public abstract class GameObject {
 	protected float width;
 	protected float height;
 	protected Point position;
-	protected Shape hitbox;
-	protected Shape outline;
+	protected Rectangle hitbox;
+	protected Rectangle outline;
 
 	protected Image image;
 	protected Animation animation;
@@ -103,7 +102,7 @@ public abstract class GameObject {
 	public void init(GameContainer gc, StateBasedGame game) {
 
 		posTile = new int[2];
-		outline = new Rectangle(0, 0, 0, 0);
+		outline = new Rectangle(renderX, renderY, renderW, renderH);
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
@@ -112,14 +111,13 @@ public abstract class GameObject {
 		renderY = getPosYToScreen() -(GameCam.offY);
 		renderW = getWidthToScreen();
 		renderH = getHeightToScreen();
-
+		
 		((Rectangle) outline).setBounds(renderX , renderY, renderW, renderH);
+		
+		colliding = false;
 	}
 
-	public abstract void render(GameContainer gc, StateBasedGame game, Graphics g, float scale);
 
-	public abstract void isCollidingWith(GameObject object);
-	
 	public float getPosXToScreen() {
 		return posX * scale;
 	}
@@ -136,6 +134,22 @@ public abstract class GameObject {
 		return height * scale;
 	}
 
+	public float translateX(float posX) {
+		return (posX  + GameCam.offX) / scale;
+	}
+
+	public float translateY(float posY) {
+		return (posY  + GameCam.offY) / scale;
+	}
+	
+	public float translateWidth(float width) {
+		return width / scale;
+	}
+
+	public float translateHeight(float height) {
+		return height / scale;
+	}
+	
 	public long getId() {
 		return id;
 	}

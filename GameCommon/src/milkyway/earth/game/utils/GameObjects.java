@@ -11,6 +11,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import milkyway.earth.game.interfaces.IRenderable;
 import milkyway.earth.game.world.GameLevel;
 import milkyway.earth.object.Block;
 import milkyway.earth.object.GameObject;
@@ -101,7 +102,6 @@ public class GameObjects {
 		GameObjects.game = game;
 	}
 
-
 	public void update(GameContainer gc, StateBasedGame game, int delta, GameObject object) {
 
 		for (long l : objects.keySet()) {
@@ -114,14 +114,20 @@ public class GameObjects {
 
 	private void sortObjectsForCollision(GameObject object) {
 
+		// SET MOVABLEOBJECTS POS_TILE !!!!
+
 		if (!(object instanceof Block)) {
-			int[] posTile = { (int) ((object.getPosX() + object.getWidth() / 2) / Block.BLOCK_SIZE),
-					(int) ((object.getPosY() + object.getHeight() / 2) / Block.BLOCK_SIZE) };
-			
+
+			int[] posTile = {
+					(int) ((object.translateX(object.getHitbox().getX())
+							+ object.translateWidth(object.getHitbox().getWidth()) / 2) / Block.BLOCK_SIZE),
+					(int) ((object.translateY(object.getHitbox().getY())
+							+ object.translateHeight(object.getHitbox().getHeight()) / 2) / Block.BLOCK_SIZE) };
+
 			if (!(posTile[0] == object.getPosTile()[0] && posTile[1] == object.getPosTile()[1])) {
-				
+
 				int range = 1;
-				
+
 				for (int i = -range; i <= range; i++) {
 					for (int j = -range; j <= range; j++) {
 						int a = (object.getPosTile()[0] + i);
@@ -133,7 +139,7 @@ public class GameObjects {
 				}
 
 				object.setPosTile(posTile);
-				
+
 				for (int i = -range; i <= range; i++) {
 					for (int j = -range; j <= range; j++) {
 						int a = (object.getPosTile()[0] + i);
@@ -176,7 +182,7 @@ public class GameObjects {
 
 		for (long l : layer01.keySet()) {
 			GameObject currentObject = objects.get(l);
-			currentObject.render(gc, game, g, scale);
+			((IRenderable) currentObject).render(gc, game, g, scale);
 		}
 	}
 
@@ -192,7 +198,7 @@ public class GameObjects {
 
 		for (GameObject go : list) {
 			if (go != object) {
-				go.render(gc, game, g, scale);
+				((IRenderable) go).render(gc, game, g, scale);
 			}
 		}
 	}
@@ -209,7 +215,7 @@ public class GameObjects {
 
 		for (GameObject go : list) {
 			if (go != object) {
-				go.render(gc, game, g, scale);
+				((IRenderable) go).render(gc, game, g, scale);
 			}
 		}
 	}
@@ -219,7 +225,7 @@ public class GameObjects {
 
 		for (long l : layer03.keySet()) {
 			GameObject currentObject = objects.get(l);
-			currentObject.render(gc, game, g, scale);
+			((IRenderable) currentObject).render(gc, game, g, scale);
 		}
 	}
 }

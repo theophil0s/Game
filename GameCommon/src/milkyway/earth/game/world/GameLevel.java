@@ -24,25 +24,32 @@ public class GameLevel {
 
 	public void init(GameContainer gc) {
 
+		Tree tree1 = new Tree(GameID.getID(), GameObject.RENDER_LAYER_2, GameResources.tree, Tree.OFFSET_X, Tree.OFFSET_Y);
+
+//		Chest chest = new Chest(GameID.getID(), 500, 500, GameObject.RENDER_LAYER_2, GameResources.chest.getSprite(0, 0));
+//		Tree tree2 = new Tree(GameID.getID(), 700, 500, GameObject.RENDER_LAYER_2, GameResources.tree);
+//		Tree tree3 = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
+
 		for (int x = 0; x < sizeX; x++) {
 			for (int y = 0; y < sizeY; y++) {
-				block[x][y] = new Block(x, y);
-				block[x][y].setSprite(GameResources.sprite, 5, 0);
+				
+				if (x == 5 && y == 5) {
+					block[x][y] = new Block(x, y, tree1);
+					block[x][y].setSprite(GameResources.colorTiles, 5, 0);
+				
+				}else {
+				
+					block[x][y] = new Block(x, y, null);
+					block[x][y].setSprite(GameResources.sprite, 5, 0);
+				}
+
 				block[x][y].setId(GameID.getID());
 				block[x][y].setRenderLayer(GameObject.RENDER_LAYER_1);
 				block[x][y].setPosition((float) (x * block[x][y].getWidth()), (float) (y * block[x][y].getHeight()));
 			}
 		}
 
-		Tree tree1 = new Tree(GameID.getID(), 200, 400, GameObject.RENDER_LAYER_2, GameResources.tree);
-		GameObjects.addObject(tree1);
-		Tree tree2 = new Tree(GameID.getID(), 700, 500, GameObject.RENDER_LAYER_2, GameResources.tree);
-		GameObjects.addObject(tree2);
-		Tree tree3 = new Tree(GameID.getID(), 500, 250, GameObject.RENDER_LAYER_2, GameResources.tree);
-		GameObjects.addObject(tree3);
 		
-//		Chest chest = new Chest(GameID.getID(), 500, 500, GameObject.RENDER_LAYER_2, GameResources.chest.getSprite(0, 0));
-//		GameObjects.addObject(chest);
 		
 	}
 
@@ -65,6 +72,7 @@ public class GameLevel {
 						&& block[x][y].getPosY() < object.getPosY() + object.getViewDistance()) {
 
 					if (!GameObjects.getObjectList().containsKey((block[x][y]).getId())) {
+						
 						GameObjects.addObject(block[x][y]);
 					}
 
