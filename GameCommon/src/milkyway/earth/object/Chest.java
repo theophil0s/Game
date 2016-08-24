@@ -12,8 +12,9 @@ import milkyway.earth.game.world.GameCam;
 public class Chest extends Fixture {
 
 	private boolean open;
-	
-	public Chest() {	}
+
+	public Chest() {
+	}
 
 	public Chest(long id, int renderLayer, Image image, float fixOffSetX, float fixOffSetY) {
 		super(id, renderLayer, image, fixOffSetX, fixOffSetY);
@@ -23,7 +24,7 @@ public class Chest extends Fixture {
 	public void init(GameContainer gc, StateBasedGame game) {
 		super.init(gc, game);
 
-		hitbox = new Rectangle(0,0,0,0);
+		hitbox = new Rectangle(0, 0, 0, 0);
 	}
 
 	@Override
@@ -31,15 +32,15 @@ public class Chest extends Fixture {
 		super.update(gc, game, delta);
 		colliding = false;
 
-		((Rectangle) hitbox).setBounds(renderX + renderW / 4 , renderY + renderH / 3, renderW / 2, renderH / 2);
-		
+		((Rectangle) hitbox).setBounds(renderX + renderW / 4, renderY + renderH / 3, renderW / 2, renderH / 2);
+
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 
-		if (image != null) {	
+		if (image != null) {
 			image.startUse();
 			image.drawEmbedded(renderX, renderY, renderW, renderH);
 			image.endUse();
@@ -50,14 +51,14 @@ public class Chest extends Fixture {
 	public void isCollidingWith(GameObject object) {
 		open();
 	}
-	
+
 	private void open() {
-		
+
 		if (!open) {
 			image = GameResources.chest.getSprite(1, 0);
 			open = true;
 		}
-		
+
 		if (selected) {
 			image = GameResources.chest.getSprite(0, 0);
 			open = false;
@@ -66,8 +67,8 @@ public class Chest extends Fixture {
 
 	@Override
 	public void checkSelection(GameContainer gc) {
-		
-		if (outline.contains(GameCam.mX , GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+
+		if (outline.contains(GameCam.mX, GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			selected = !selected;
 		}
 	}

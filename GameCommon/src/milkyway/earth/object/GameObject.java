@@ -20,6 +20,7 @@ public abstract class GameObject {
 
 	public boolean colliding;
 	public boolean selected;
+	public boolean contains;
 	
 	private long id;
 	protected String name;
@@ -45,6 +46,7 @@ public abstract class GameObject {
 	protected Image image;
 	protected Animation animation;
 	protected SpriteSheet sprite;
+	protected Fixture fixture;
 	protected int spriteX;
 	protected int spriteY;
 
@@ -52,8 +54,10 @@ public abstract class GameObject {
 	protected Boolean moveDown = false;
 	protected Boolean moveLeft = false;
 	protected Boolean moveRight = false;
+	protected MovableObject movableObject;
 
-	public GameObject() { }
+	public GameObject() {
+	}
 
 	public GameObject(long id, float posX, float posY, Image image) {
 		this.id = id;
@@ -107,16 +111,15 @@ public abstract class GameObject {
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 
-		renderX = getPosXToScreen() -(GameCam.offX);
-		renderY = getPosYToScreen() -(GameCam.offY);
+		renderX = getPosXToScreen() - (GameCam.offX);
+		renderY = getPosYToScreen() - (GameCam.offY);
 		renderW = getWidthToScreen();
 		renderH = getHeightToScreen();
-		
-		((Rectangle) outline).setBounds(renderX , renderY, renderW, renderH);
-		
+
+		((Rectangle) outline).setBounds(renderX, renderY, renderW, renderH);
+
 		colliding = false;
 	}
-
 
 	public float getPosXToScreen() {
 		return posX * scale;
@@ -135,13 +138,13 @@ public abstract class GameObject {
 	}
 
 	public float translateX(float posX) {
-		return (posX  + GameCam.offX) / scale;
+		return (posX + GameCam.offX) / scale;
 	}
 
 	public float translateY(float posY) {
-		return (posY  + GameCam.offY) / scale;
+		return (posY + GameCam.offY) / scale;
 	}
-	
+
 	public float translateWidth(float width) {
 		return width / scale;
 	}
@@ -149,7 +152,7 @@ public abstract class GameObject {
 	public float translateHeight(float height) {
 		return height / scale;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -176,6 +179,46 @@ public abstract class GameObject {
 
 	public int getRenderLayer() {
 		return renderLayer;
+	}
+
+	public float getRenderX() {
+		return renderX;
+	}
+
+	public void setRenderX(float renderX) {
+		this.renderX = renderX;
+	}
+
+	public float getRenderY() {
+		return renderY;
+	}
+
+	public void setRenderY(float renderY) {
+		this.renderY = renderY;
+	}
+
+	public float getRenderW() {
+		return renderW;
+	}
+
+	public void setRenderW(float renderW) {
+		this.renderW = renderW;
+	}
+
+	public float getRenderH() {
+		return renderH;
+	}
+
+	public void setRenderH(float renderH) {
+		this.renderH = renderH;
+	}
+
+	public Rectangle getOutline() {
+		return outline;
+	}
+
+	public void setOutline(Rectangle outline) {
+		this.outline = outline;
 	}
 
 	public void setId(long i) {

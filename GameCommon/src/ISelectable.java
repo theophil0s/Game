@@ -1,4 +1,4 @@
-package milkyway.earth.game.interfaces;
+
 
 import org.newdawn.slick.GameContainer;
 

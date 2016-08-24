@@ -21,10 +21,10 @@ public class GameObjects {
 	private volatile static long playerId = -1;
 	private volatile static GameObjects go = new GameObjects();
 	private volatile static ConcurrentHashMap<Long, GameObject> objects;
-	private static HashMap<Long, GameObject> layer01;
-	private static HashMap<Long, GameObject> layer02Before;
-	private static HashMap<Long, GameObject> layer02After;
-	private static HashMap<Long, GameObject> layer03;
+	private volatile static HashMap<Long, GameObject> layer01;
+	private volatile static HashMap<Long, GameObject> layer02Before;
+	private volatile static HashMap<Long, GameObject> layer02After;
+	private volatile static HashMap<Long, GameObject> layer03;
 
 	private static GameContainer gc;
 	private static StateBasedGame game;
@@ -81,20 +81,24 @@ public class GameObjects {
 
 	public static void removeObject(GameObject object) {
 
-		objects.remove(object.getId());
-
+		if (object instanceof Block && ((Block) object).hasFixture()) {
+			removeObject(((Block) object).getFixture());
+		}
+		
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_1) {
 			layer01.remove(object.getId());
 		} else
-
+	
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_2) {
 			layer02Before.remove(object.getId());
 			layer02After.remove(object.getId());
 		} else
-
+	
 		if (object.getRenderLayer() == GameObject.RENDER_LAYER_3) {
 			layer03.remove(object.getId());
 		}
+	
+		objects.remove(object.getId());
 	}
 
 	public void init(GameContainer gc, StateBasedGame game) {
@@ -121,6 +125,7 @@ public class GameObjects {
 			int[] posTile = {
 					(int) ((object.translateX(object.getHitbox().getX())
 							+ object.translateWidth(object.getHitbox().getWidth()) / 2) / Block.BLOCK_SIZE),
+					
 					(int) ((object.translateY(object.getHitbox().getY())
 							+ object.translateHeight(object.getHitbox().getHeight()) / 2) / Block.BLOCK_SIZE) };
 
@@ -132,7 +137,6 @@ public class GameObjects {
 					for (int j = -range; j <= range; j++) {
 						int a = (object.getPosTile()[0] + i);
 						int b = (object.getPosTile()[1] + j);
-						if (a >= 0 && b >= 0) {
 							GameLevel.block[a][b].removeObject(object);
 						}
 					}
@@ -144,7 +148,6 @@ public class GameObjects {
 					for (int j = -range; j <= range; j++) {
 						int a = (object.getPosTile()[0] + i);
 						int b = (object.getPosTile()[1] + j);
-						if (a >= 0 && b >= 0) {
 							GameLevel.block[a][b].addObject(object);
 						}
 					}
@@ -161,7 +164,7 @@ public class GameObjects {
 		if (currentObject.getRenderLayer() == GameObject.RENDER_LAYER_2) {
 
 			if (object != null
-					&& currentObject.getPosY() + currentObject.getHeight() < object.getPosY() + object.getHeight()) {
+					&& currentObject.getRenderY() + currentObject.getRenderH() < object.getRenderY() + object.getRenderH()) {
 
 				layer02After.remove(currentObject.getId(), currentObject);
 				layer02Before.put(currentObject.getId(), currentObject);

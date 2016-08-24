@@ -97,32 +97,38 @@ public class StatePlay extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-//		FloatBuffer ambient = BufferUtils.createFloatBuffer(4);
-//		ambient.put(new float[] { 0.05f, 0.05f, .5f, 1f, });
-//		ambient.flip();    
-//		
-//		FloatBuffer position = BufferUtils.createFloatBuffer(4);
-//		position.put(new float[] { 1f, 0f, 1f, 1f, });
-//		position.flip();    
-//		
-//		GL11.glEnable(GL11.GL_LIGHTING);
-//		GL11.glEnable(GL11.GL_LIGHT0);
-//		GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, ambient);
-//		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
-//		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+		// FloatBuffer ambient = BufferUtils.createFloatBuffer(4);
+		// ambient.put(new float[] { 0.05f, 0.05f, .5f, 1f, });
+		// ambient.flip();
+		//
+		// FloatBuffer position = BufferUtils.createFloatBuffer(4);
+		// position.put(new float[] { 1f, 0f, 1f, 1f, });
+		// position.flip();
+		//
+		// GL11.glEnable(GL11.GL_LIGHTING);
+		// GL11.glEnable(GL11.GL_LIGHT0);
+		// GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, ambient);
+		// GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, position);
+		// GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+
+		// GL11.glClear(GL11.GL_COLOR_BUFFER_BIT |GL11.GL_DEPTH_BUFFER_BIT); //
+		// Clean the screen and the depth buffer
+		// GL11.glLoadIdentity(); // Reset The Projection Matrix
 		
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11.GL_TEXTURE_MIN_FILTER,GL11.GL_NEAREST);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 
 		GameObjects.renderLayer01(gc, game, g, Game.getScale(), player);
 		GameObjects.renderLayer02Before(gc, game, g, Game.getScale(), player);
 
-		if (player != null) player.render(gc, game, g, Game.getScale());
+		if (player != null)
+			player.render(gc, game, g, Game.getScale());
 
 		GameObjects.renderLayer02After(gc, game, g, Game.getScale(), player);
-		GameCam.update(gc, Game.getScale(), player);
 		GameObjects.renderLayer03(gc, game, g, Game.getScale(), player);
+		
+		GameCam.update(gc, Game.getScale(), player);
 		overlay.render(gc, g, camera);
 
 	}

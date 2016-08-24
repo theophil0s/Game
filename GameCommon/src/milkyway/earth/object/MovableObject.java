@@ -9,20 +9,21 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.ShapeRenderer;
 import org.newdawn.slick.state.StateBasedGame;
 
-import milkyway.earth.game.effects.RenderEffect;
 import milkyway.earth.game.interfaces.ICollidable;
 import milkyway.earth.game.interfaces.IRenderable;
 import milkyway.earth.game.interfaces.ISelectable;
 import milkyway.earth.game.interfaces.IUpdatable;
 import milkyway.earth.game.world.GameCam;
 
-public class MovableObject extends GameObject implements ICollidable, ISelectable, IUpdatable, IRenderable{
+public class MovableObject extends GameObject implements ICollidable, ISelectable, IUpdatable, IRenderable {
 
 	private int tempCounter;
 	private ConcurrentHashMap<Long, GameObject> objects;
+	public float speed = 0.1F;
 
-	public MovableObject () { }
-	
+	public MovableObject() {
+	}
+
 	public MovableObject(long id, float posX, float posY, Image image) {
 		super(id, posX, posY, image);
 		objects = new ConcurrentHashMap<>();
@@ -32,62 +33,102 @@ public class MovableObject extends GameObject implements ICollidable, ISelectabl
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
 		super.update(gc, game, delta);
 
+		setAnimation();
 		checkSelection(gc);
-		
-		if (moveRight) {
-			animation = GameResources.animationRight;
-		} else
 
-		if (moveLeft) {
-			animation = GameResources.animationLeft;
-		} else
-
-		if (moveUp) {
-			animation = GameResources.animationUp;
-		} else
-
-		if (moveDown) {
-			animation = GameResources.animationDown;
-		} else {
-
-			if (animation != null && image != animation.getImage(1)) {
-
-				image = animation.getImage(1);
-			}
-			animation = null;
-
-		}
 	}
 
+	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g, float scale) {
 		this.scale = scale;
 
-		
-		if (selected) {
-			RenderEffect.renderAsGhost(image, animation, renderX, renderY, renderW, renderH, 1, 1, 1, 1);
-		} else
 		// TODO ADD DRAW EMBEDDED
 		if (animation != null) {
 
 			animation.draw(renderX, renderY, renderW, renderH, null);
 
-		} else 
-		
+		} else
+
 		if (image != null) {
 			image.draw(renderX, renderY, renderW, renderH, null);
 		}
 
-		ShapeRenderer.draw(outline);
-		ShapeRenderer.draw(hitbox);
+		if(selected) {
+			ShapeRenderer.draw(hitbox);
+			ShapeRenderer.draw(outline);
+		}
+
 	}
 
 	@Override
 	public void setPosition(float posX, float posY) {
+		// REMOTE OBJECTS
+		setDirection(posX, posY);
+		super.setPosition(posX, posY);
+	}
 
-		// TODO Add Speed and delta
-		posX = posX - checkCollisionH(posX);
-		posY = posY - checkCollisionV(posY);
-		
+	public void setPosition(float posX, float posY, float speed, int delta) {
+		// LOCAL OBJECTS
+		posX = posX - checkCollisionH(posX, speed, delta);
+		posY = posY - checkCollisionV(posY, speed, delta);
+		setDirection(posX, posY);
+		super.setPositionToSend(posX, posY);
+	}
+
+	private float checkCollisionH(float x, float speed, int delta) {
+
+		if (objects != null && hitbox != null) {
+			for (long l : objects.keySet()) {
+				GameObject currentObject = objects.get(l);
+				
+				if (currentObject.getOutline().contains(this.outline.getCenterX(), this.outline.getCenterY())) {
+					((ICollidable) currentObject).setContains(this);
+				}
+				
+				if (currentObject.getHitbox() != null && currentObject.getHitbox().intersects(hitbox)) {
+
+					((ICollidable) currentObject).isCollidingWith(this);
+					
+					if (currentObject.getHitbox().getCenterX() < hitbox.getCenterX()) {
+
+						return -(speed * delta);
+
+					} else {
+
+						return speed * delta;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
+	private float checkCollisionV(float y, float speed, int delta) {
+
+		if (objects != null) {
+			for (long l : objects.keySet()) {
+				GameObject currentObject = objects.get(l);
+				if (currentObject.getHitbox().intersects(hitbox)) {
+
+					((ICollidable) currentObject).isCollidingWith(this);
+
+					if (currentObject.getHitbox().getCenterY() < hitbox.getCenterY()) {
+
+						return -(speed * delta);
+
+					} else {
+
+						return speed * delta;
+					}
+				}
+			}
+		}
+
+		return 0;
+	}
+
+	private void setDirection(float posX, float posY) {
+
 		if (posX == this.posX && posY < this.posY) {
 			moveRight = false;
 			moveLeft = false;
@@ -155,49 +196,33 @@ public class MovableObject extends GameObject implements ICollidable, ISelectabl
 				tempCounter = 0;
 			}
 		}
-
-			super.setPosition(posX, posY);
 	}
 
-	private float checkCollisionH(float x) {
+	private void setAnimation() {
 
-		if (objects != null && hitbox != null) {
-			for (long l : objects.keySet()) {
-				GameObject currentObject = objects.get(l);
-				if (currentObject.getHitbox() != null && currentObject.getHitbox().intersects(hitbox)) {
-					
-					((ICollidable) currentObject).isCollidingWith(this);
-					
-					if (currentObject.getHitbox().getCenterX() < hitbox.getCenterX()) {
-						return -1F; // TODO Add Speed and delta
-					} else {
-						return 1; // TODO Add Speed and delta
-					}
-				}
-			}
-		}
-		return 0;
-	}
+		if (moveRight) {
+			animation = GameResources.animationRight;
+		} else
 
-	private float checkCollisionV(float y) {
-		
-		if (objects != null) {
-			for (long l : objects.keySet()) {
-				GameObject currentObject = objects.get(l);
-				if (currentObject.getHitbox().intersects(hitbox)) {
-					
-					((ICollidable) currentObject).isCollidingWith(this);
-					
-					if (currentObject.getHitbox().getCenterY() < hitbox.getCenterY()) {
-						return - 1F; // TODO Add Speed and delta
-					} else {
-						return 1F; // TODO Add Speed and delta
-					} 
-				}
+		if (moveLeft) {
+			animation = GameResources.animationLeft;
+		} else
+
+		if (moveUp) {
+			animation = GameResources.animationUp;
+		} else
+
+		if (moveDown) {
+			animation = GameResources.animationDown;
+		} else {
+
+			if (animation != null && image != animation.getImage(1)) {
+
+				image = animation.getImage(1);
 			}
+			animation = null;
+
 		}
-		
-		return 0;
 	}
 
 	public void addObject(GameObject object) {
@@ -221,12 +246,27 @@ public class MovableObject extends GameObject implements ICollidable, ISelectabl
 		colliding = true;
 		System.out.println(object);
 	}
-
+	
 	@Override
 	public void checkSelection(GameContainer gc) {
-		
-		if (outline.contains(GameCam.mX , GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+		if (outline.contains(GameCam.mX, GameCam.mY) && gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			selected = !selected;
 		}
+	}
+
+	@Override
+	public void checkContains(GameObject object) {
+		if ( object != null) {
+			if (!this.outline.contains(movableObject.getOutline().getCenterX(), movableObject.getOutline().getCenterY())){
+				contains = false;
+			};
+		}
+		
+	}
+
+	@Override
+	public void setContains(GameObject object) {
+		this.movableObject = (MovableObject) object;
+		
 	}
 }

@@ -71,11 +71,10 @@ public class GameOverlay {
 		for (long l : GameObjects.getObjectList().keySet()) {
 			if (GameObjects.getObjectList().get(l) instanceof Player) {
 				Player p = (Player) GameObjects.getObjectList().get(l);
-				g.drawString("Player ID " + l + " x: " + p.getPosX() + " y: "
-						+ p.getPosY(), hDist, pos);
+				g.drawString("Player ID " + l + " x: " + p.getPosX() + " y: " + p.getPosY(), hDist, pos);
 				pos += vDist;
-				g.drawString("Tile: " + " col: " + p.getPosTile()[0] + " row: "
-						+ p.getPosTile()[1] + " Obj: " + p.getObjectsSize(), hDist, pos);
+				g.drawString("Tile: " + " col: " + p.getPosTile()[0] + " row: " + p.getPosTile()[1] + " Obj: "
+						+ p.getObjectsSize(), hDist, pos);
 				pos += vDist;
 			}
 		}
