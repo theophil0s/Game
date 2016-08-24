@@ -111,8 +111,8 @@ public class GameObjects {
 		for (long l : objects.keySet()) {
 			GameObject currentObject = objects.get(l);
 			currentObject.update(gc, game, delta);
-			sortObjectsForCollision(currentObject);
 			sortObjectsToRender(currentObject, object);
+			sortObjectsForCollision(currentObject);
 		}
 	}
 
@@ -137,6 +137,7 @@ public class GameObjects {
 					for (int j = -range; j <= range; j++) {
 						int a = (object.getPosTile()[0] + i);
 						int b = (object.getPosTile()[1] + j);
+						if (a >= 0 && b >= 0 && a < GameLevel.SIZE_X && b < GameLevel.SIZE_Y) {
 							GameLevel.block[a][b].removeObject(object);
 						}
 					}
@@ -148,6 +149,7 @@ public class GameObjects {
 					for (int j = -range; j <= range; j++) {
 						int a = (object.getPosTile()[0] + i);
 						int b = (object.getPosTile()[1] + j);
+						if (a >= 0 && b >= 0 && a < GameLevel.SIZE_X && b < GameLevel.SIZE_Y) {
 							GameLevel.block[a][b].addObject(object);
 						}
 					}
