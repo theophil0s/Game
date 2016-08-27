@@ -60,3 +60,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 /bin/
+/GameServer/dungeon2.PNG
+/GameServer/dungeon.PNG
